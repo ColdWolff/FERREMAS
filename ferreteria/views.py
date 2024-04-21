@@ -15,3 +15,10 @@ def hnf(request):
         request,
         "hnf.html",
     )
+    
+    
+def c(request):
+    return render(
+        request,
+        "carrito.html",
+    )

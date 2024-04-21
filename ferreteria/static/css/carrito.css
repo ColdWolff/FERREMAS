@@ -113,7 +113,6 @@ header{
     height:100px;
 }
 
-
 /* Disposicion Items*/
 .contenedor{
     max-width: 1200px;
@@ -124,69 +123,36 @@ header{
     contain: paint;
 }
 
-.contenedor .contenedor-items{
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    grid-gap: var();
-    grid-row-gap: 30px;
-    width: 60%;
-    transition: .3s;
-}
-
-.contenedor .contenedor-items .item{
-    max-width: 200px;
-    padding: 10px;
-    margin: auto;
-    border: 1px solid #666;
-    border-radius: 10px;
-    padding: 20px;
-    transition: .3s;
-}
-
-.contenedor-items .item:hover{
-    box-shadow: 0 0 10px #666;
-    scale: 1.05;
-}
-
-.contenedor .contenedor-items .img-item{
-    width: 100%;
-}
-
-.contenedor-items .item .titulo-item{
-    display: block;
-    font-weight: bold;
-    text-align: center;
-    text-transform:capitalize;
-}
-
-.contenedor-items .item .precio-item{
-    display: block;
-    text-align: center;
-    font-weight: bold;
-    font-size: 22px;
-}
-
-.contenedor-items .item .boton-item{
-    display: block;
-    margin: 10px auto;
-    border: none;
-    background: #FF8A41;
-    color: #ffeddc;
-    padding: 5px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 /* Carrito*/
-.carrito{
+.resumen {
     border: 1px solid #666;
-    width: 35%;
+    float: left; 
+    width: 40%; 
     margin-top: 30px;
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: auto;
-    position: sticky !important;
+    top: 0;
+    transition: .3s;
+}
+
+.resumen h3 {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin: 0;
+}
+
+.carrito{
+    border: 1px solid #666;
+    float: right;
+    width: 50%;
+    margin-top: 30px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: auto;
     top: 0;
     transition: .3s;
 }
@@ -201,24 +167,36 @@ header{
 .carrito .carrito-item{
     display: flex;
     align-items: center;
+    text-align: center;
     position: relative;
     border-bottom: 1px solid #666;
     padding: 20px;
+    flex-direction: column;
 }
 
 .carrito .carrito-item img{
+    width: 30%;
+    height: 30%;
     margin-right: 20px;
+    align-self: center;
 }
 
 .carrito .carrito-item .carrito-item-titulo{
-    display: block;
+    display: flex;
+    text-align: center;
     font-weight: bold;
     margin-bottom: 10px;
     text-transform: capitalize;
 }
 
+.carrito .carrito-item .carrito-item-detalle{
+    text-align: center;
+    align-items: center;
+
+}
+
 .carrito .carrito-item .selector-cantidad{
-    display: inline-block;
+    display: inline-flex;
     margin-right: 25px;
 }
 
@@ -226,10 +204,14 @@ header{
     border: none;
     font-size: 18px;
     background: transparent;
-    display: inline-block;
+    display: inline-flex;
     width: 30px;
     padding: 5px;
     text-align: center;
+}
+
+.carrito .carrito-item .selector-cantidad .sumar-cantidad {
+    margin-right: 10px;
 }
 
 .carrito .carrito-item .selector-cantidad i{
@@ -245,28 +227,13 @@ header{
 
 .carrito .carrito-item .carrito-item-precio{
     font-weight: bold;
-    display: inline-block;
+    display: inline-flex;
     font-size: 18px;
     margin-bottom: 5px;
+    text-align: center;
 }
 
 .carrito .carrito-item .btn-eliminar{
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    color: #000;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 50%;
-    border: 1px solid #000;
-    display: block;
-    background: transparent;
-    z-index: 20;
-}
-
-.carrito .carrito-item .btn-eliminar i{
     pointer-events: none;
 }
 
@@ -285,10 +252,9 @@ header{
 }
 
 .carrito-total .btn-pagar{
-    display: block;
     width: 100%;
     border: none;
-    background: #FF8A41;
+    background: #c54c00;
     color: #ffeddc;
     border-radius: 5px;
     font-size: 18px;
@@ -302,21 +268,6 @@ header{
 
 .carrito-total .btn-pagar:hover{
     scale: 1.05;
-}
-
-/*Responsive*/
-@media screen and (max-width: 850px){
-    .contenedor{
-        display: block;
-    }
-
-    .contenedor-items{
-        width: 100% !important;
-    }
-
-    .carrito{
-        width: 100%;
-    }
 }
 
 
