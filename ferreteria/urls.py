@@ -5,4 +5,6 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("hnf", views.hnf, name="hnf"),
     path("carrito", views.c, name="c"),
+    path("converter", views.converter, name="converter"),
+    path("llamar_converter", views.llamar_converter, name="llamar_converter"),
 ]

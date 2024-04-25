@@ -319,5 +319,54 @@ header{
     }
 }
 
+/* Conversor */
+.contenedor .contenedor-converter{
+    display: grid;
+    width: 100%;
+    transition: .3s;
+    margin-top: 18px;
+    margin-bottom: 50px;
+}
+
+.contenedor .contenedor-converter .item{
+    max-width: 200px;
+    padding: 10px;
+    margin: auto;
+    border: 1px solid #666;
+    border-radius: 10px;
+    padding: 20px;
+    transition: .3s;
+}
+
+.contenedor-converter .item .titulo-converter{
+    display: block;
+    font-weight: bold;
+    text-align: center;
+}
+
+.contenedor-converter .item .boton-converter{
+    display: block;
+    margin: 10px auto;
+    border: none;
+    background: #FF8A41;
+    color: #ffeddc;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contenedor-converter .item .boton-converter:hover{
+    background: #ff7c11;
+    color: #ffeddc;
+    scale: 1.05;
+}
+
+.titulo-converter .converter-input{
+    display: block;
+    width: 100px;
+    margin: 10px auto;
+    padding: 5px 15px;
+    text-align: center;
+}
 
 
