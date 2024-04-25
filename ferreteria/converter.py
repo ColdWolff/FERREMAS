@@ -1,27 +1,6 @@
 import bcchapi, requests, json
 from datetime import datetime
 from urllib.request import urlopen
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route('/llamar_converter')
-def llamar_converter():
-    try:
-        response = requests.get()
-        if response.status_code == 200:
-            print("poto")
-            resultado = usd_a_clp(2)
-            return resultado[1]
-        else:
-            print("Error HTTP ", response.status_code)
-            return 0.0
-    except Exception as e:
-        print("Error al procesar la solicitud:", e)
-        return 0.0
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 #Funciones
 def fecha_de_hoy():
@@ -38,5 +17,5 @@ def usd_a_clp(usd):
     clp = float(usd)*float(valor)
     values.append(valor)
     values.append(clp)
-    return values
+    return clp
 

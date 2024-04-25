@@ -17,18 +17,17 @@
 <body>
     <section class="contenedor">
         <!-- Container Conversor -->
-        <form method="post" action="/llamar_converter">
-            {% csrf_token %}
-            <span class="titulo-converter">
-                Conversor de precio USD a CLP
-                <input type="number" class="converter-input" id="usd" name="usd">
-                <input type="number" class="converter-input" value="{{ clp }}" id="clp" name="clp" disabled>
-            </span>
-            <button class="boton-converter" style="text-decoration: none;" id="Btnconvertir"> Convertir </button>
-        </form>
-
+        <div class="contenedor-converter">
+            <div class="item">
+                <span class="titulo-converter">
+                    Conversor de precio USD a CLP
+                    <input type="number" class="converter-input" id="usd" name="usd">
+                    <input type="" class="converter-input" value="0" id="clp" name="clp" disabled>
+                </span>
+                <button class="boton-converter" style="text-decoration: none;" onclick="" id="Btnconvertir"> Convertir </button>
+            </div>
+        </div>
     </section>
-
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
