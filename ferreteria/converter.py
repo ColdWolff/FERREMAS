@@ -17,5 +17,10 @@ def usd_a_clp(usd):
     clp = float(usd)*float(valor)
     values.append(valor)
     values.append(clp)
-    return clp
+    return values
 
+valores = usd_a_clp(5)
+dolar = valores[0]
+convertido = valores[1]
+print("Valor dolar hoy: "+ str(dolar))
+print("Convertido:"+ str(convertido))
