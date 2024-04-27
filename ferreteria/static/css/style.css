@@ -369,4 +369,9 @@ header{
     text-align: center;
 }
 
-
+/* Mensaje de error */
+.message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}

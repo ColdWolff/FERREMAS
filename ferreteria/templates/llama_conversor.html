@@ -20,11 +20,19 @@
         <div class="contenedor-converter">
             <div class="item">
                 <span class="titulo-converter">
-                    Su valor convertido es de:
-                        <input type="text" class="converter-input" value="${{ clp }}" id="clp" name="clp" disabled>
-                        <p style="font-size: 14px; text-align: center;">Valor de conversion utilizado: {{ actual }}</p>
-                        <a class="boton-converter" style="text-decoration: none;" href="/convertir"> Convertir otro valor </a>
-                    </span>
+                    Conversor de precio
+                    <form action="/convertir" method="post">
+                        {% csrf_token %}
+                        <select name="moneda" id="moneda">
+                            <option value="USD">USD</option>
+                            <option value="Euro">Euro</option>
+                            <option value="Libra">Libra</option>
+                        </select>
+                        <input type="text" class="converter-input" id="usd" name="usd">
+                        <p style="color: rgb(214, 26, 19); font-size: 14px; font-weight: bold;">{{ mensaje }}</p>
+                        <button class="boton-converter" style="text-decoration: none;"> Convertir </button>
+                    </form>
+                </span>
             </div>
         </div>
     </section>
