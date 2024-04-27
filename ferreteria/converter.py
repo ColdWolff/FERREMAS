@@ -1,4 +1,4 @@
-import bcchapi, requests, json
+import requests, json
 from datetime import datetime
 from urllib.request import urlopen
 
@@ -10,7 +10,8 @@ def fecha_de_hoy():
 
 def usd_a_clp(usd):
     values = []
-    url = 'https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate='+str(fecha_de_hoy())+'&lastdate='+str(fecha_de_hoy())
+    f_hoy = str(fecha_de_hoy())
+    url = 'https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=fr.aranedag@duocuc.cl&pass=A20846555-4&firstdate='+f_hoy+'&lastdate='+f_hoy+'&timeseries=F073.TCO.PRE.Z.D&function=GetSeries'
     response = urlopen(url)
     data = json.load(response)
     valor = data["Series"]["Obs"][0]["value"]
@@ -22,5 +23,5 @@ def usd_a_clp(usd):
 valores = usd_a_clp(5)
 dolar = valores[0]
 convertido = valores[1]
-print("Valor dolar hoy: "+ str(dolar))
-print("Convertido:"+ str(convertido))
+print(f"Valor dolar hoy: ${dolar}")
+print(f"Convertido: ${round(convertido)}")

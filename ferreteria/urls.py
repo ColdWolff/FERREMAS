@@ -6,4 +6,5 @@ urlpatterns = [
     path("hnf", views.hnf, name="hnf"),
     path("carrito", views.c, name="c"),
     path("converter", views.converter, name="converter"),
+    path('convertir-usd-a-clp/', views.convertir_usd_a_clp, name='convertir_usd_a_clp'),
 ]
