@@ -20,10 +20,14 @@
         <div class="contenedor-converter">
             <div class="item">
                 <span class="titulo-converter">
-                    Su valor convertido es de:
-                        <input type="text" class="converter-input" value="${{ clp }}" id="clp" name="clp" disabled>
-                        <a class="boton-converter" style="text-decoration: none;" href="/convertir"> Convertir otro valor </a>
-                    </span>
+                    Conversor de precio USD a CLP
+                    <form action="/convertir" method="post">
+                        {% csrf_token %}
+                        <input type="text" class="converter-input" id="usd" name="usd">
+                        <p style="color: rgb(214, 26, 19); font-size: 14px; font-weight: bold;">{{ mensaje }}</p>
+                        <button class="boton-converter" style="text-decoration: none;"> Convertir </button>
+                    </form>
+                </span>
             </div>
         </div>
     </section>
