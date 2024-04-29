@@ -79,8 +79,8 @@ def fecha_de_hoy():
 
 def usd_a_clp(usd):
     values = []
-    # url = 'https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate='+str(fecha_de_hoy())+'&lastdate='+str(fecha_de_hoy())
-    url = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2024-04-26&lastdate=2024-04-26"
+    url = 'https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate='+str(fecha_de_hoy())+'&lastdate='+str(fecha_de_hoy())
+    #url = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate=2024-04-26&lastdate=2024-04-26"
     response = urlopen(url)
     data = json.load(response)
     valor = data["Series"]["Obs"][0]["value"]
@@ -92,8 +92,8 @@ def usd_a_clp(usd):
 
 def valor_a_clp(v,m):
     values = []
-    # url = 'https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F072.CLP."+str()+"".N.O.D&firstdate='+str(fecha_de_hoy())+'&lastdate='+str(fecha_de_hoy())
     url = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F072.CLP."+str(m)+".N.O.D&firstdate="+str(fecha_de_hoy())+"&lastdate="+str(fecha_de_hoy())
+    #url = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F072.CLP."+str(m)+".N.O.D&firstdate=2024-04-26&lastdate=2024-04-26"
     data = json.load(response)
     valor = data["Series"]["Obs"][0]["value"]
     clp = float(v) * float(valor)
