@@ -70,11 +70,19 @@ money_type = [
 
 # Funcion
 def fecha_de_hoy():
-    fecha_actual = datetime.now()
+    fecha_actual = datetime.now() 
+    # Controlador Finde
+    if fecha_actual.weekday() == 5:
+        fecha_actual = -timedelta(days=1)
+    elif fecha_actual.weekday() == 6:
+        fecha_actual = -timedelta(days=2)
+    
     seteo_fecha = "{0}-{1:02d}-{2}".format(
         fecha_actual.year, fecha_actual.month, fecha_actual.day
     )
     return seteo_fecha
+
+print(fecha_de_hoy())
 
 
 def usd_a_clp(usd):
