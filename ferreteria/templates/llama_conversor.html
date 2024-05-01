@@ -20,7 +20,7 @@
         <div class="contenedor-converter">
             <div class="item">
                 <span class="titulo-converter">
-                    Conversor de precio
+                    Conversor de <span id="moneda_seleccionada"> Dólar </span> a CLP
                     <form action="/convertir" method="post">
                         {% csrf_token %}
                         <select style="width: fit-content;" name="moneda" id="moneda">
@@ -35,10 +35,49 @@
                 </span>
             </div>
         </div>
+        <div class="contenedor-converter">
+            <div class="item">
+                <span class="titulo-converter">
+                    Conversor de CLP a <span id="moneda_seleccionada_reversa"> Dólar </span>
+                    <form action="/reconvertir" method="post">
+                        {% csrf_token %}
+                        <select style="width: fit-content;" name="moneda_reversa" id="moneda_reversa">
+                            {% for moneda in money_type %}
+                            <option value="{{ moneda.0 }}">{{ moneda.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" class="converter-input" id="clp" name="clp">
+                        <p style="color: rgb(214, 26, 19); font-size: 14px; font-weight: bold;">{{ mensaje }}</p>
+                        <button class="boton-converter" style="text-decoration: none;"> Convertir </button>
+                    </form>
+                </span>
+            </div>
+        </div>
     </section>
 </body>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectElement = document.getElementById("moneda");
+        const monedaSeleccionadaElement = document.getElementById("moneda_seleccionada");
+
+        selectElement.addEventListener("change", function (event) {
+            const selectedIndex = event.target.selectedIndex;
+            monedaSeleccionadaElement.textContent = event.target.options[selectedIndex].text;
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectElement = document.getElementById("moneda_reversa");
+        const monedaSeleccionadaElement = document.getElementById("moneda_seleccionada_reversa");
+
+        selectElement.addEventListener("change", function (event) {
+            const selectedIndex = event.target.selectedIndex;
+            monedaSeleccionadaElement.textContent = event.target.options[selectedIndex].text;
+        });
+    });
+</script>
 {% endblock %}
