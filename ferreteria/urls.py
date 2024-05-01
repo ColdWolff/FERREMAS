@@ -5,5 +5,6 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("hnf", views.hnf, name="hnf"),
     path("carrito", views.carrito, name="carrito"),
-    path("convertir", views.convertir, name="convertir"),
+    path("convertir", views.convertir_divisa, name="convertir"),
+    path("reconvertir", views.reconvertir_divisa, name="reconvertir"),
 ]
