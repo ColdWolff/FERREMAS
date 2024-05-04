@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', 'sans-serif';
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100;
+    background: url('../img/bck.jpg')no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.form-box {
+    position: relative;
+    width: 350px;
+    height: fit-content;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 10px;
+}
+
+h2 {
+    font-size: 2em;
+    color: white;
+    text-align: center;
+}
+
+.inputbox {
+    position: relative;
+    margin: 30px 0;
+    width: 310px;
+    border-bottom: 2px solid white;
+}
+
+.inputbox input {
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    color: white; /* Color del texto */
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding: auto;
+}
+
+.inputbox input::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.btn {
+    padding-top: 5px;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: #973f19;
+    border-radius: 100px;
+    color: #fffbf6;
+}
+
+.btn:hover {
+    background: #fffbf6;
+    color: #973f19;
+}
+
+.sign-in {
+    font-size: 0.9em;
+    color: white;
+    text-align: center;
+    margin: 25px 0 10px;
+}
+
+.sign-in a {
+    color: white;
+    text-decoration: none;
+}
+
+.sign-in a:hover {
+    text-decoration: underline;
+}
+
