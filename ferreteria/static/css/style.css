@@ -5,6 +5,22 @@
     font-family: 'Open Sans';
 }
 
+
+/*Responsive*/
+@media screen and (max-width: 850px){
+    .contenedor{
+        display: block;
+    }
+
+    .contenedor-items{
+        width: 100% !important;
+    }
+
+    .carrito{
+        width: 100%;
+    }
+}
+
 /* Header n' Footer */
 .navbar-nav {
     display: flex;
@@ -76,14 +92,14 @@
     text-align: center;
     margin-right: 10px;
     margin-left: 10px;
-    background: #000;
+    background: #5e2208;
     border-radius: 5px;
-    color: #fff;
+    color: #fffbf6;
+    text-decoration: none;
 }
     .btn-sign:hover{
-        background:#fff;
-        color: #000;
-        text-decoration: none;
+        background:#fffbf6;
+        color: #5e2208;
     }
 
 
@@ -111,6 +127,12 @@
 
 header{
     height:100px;
+}
+
+/* Sign-in & Sign-up */
+
+.body-login{
+    background-color: rgb(4, 2, 104);
 }
 
 
@@ -302,21 +324,6 @@ header{
 
 .carrito-total .btn-pagar:hover{
     scale: 1.05;
-}
-
-/*Responsive*/
-@media screen and (max-width: 850px){
-    .contenedor{
-        display: block;
-    }
-
-    .contenedor-items{
-        width: 100% !important;
-    }
-
-    .carrito{
-        width: 100%;
-    }
 }
 
 /* Conversor */

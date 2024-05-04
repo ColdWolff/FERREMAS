@@ -161,20 +161,17 @@ def index(request):
         "index.html",
     )
 
-
-def index(request):
+def login(request):
     return render(
         request,
-        "index.html",
+        "login.html",
     )
 
-
-def hnf(request):
+def signup(request):
     return render(
         request,
-        "hnf.html",
+        "signup.html",
     )
-
 
 def carrito(request):
     return render(
