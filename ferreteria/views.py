@@ -136,7 +136,7 @@ def reconvertir_divisa(request):
             divisa = round(float(value) / float(valor_actual), 2)
         else:
             url = f"https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F072.CLP.{tipo_cambio}.N.O.D&firstdate={fecha_de_hoy()}&lastdate={fecha_de_hoy()}"
-            divisa = round(float(value) / float(valor_moneda), 2)
+            divisa = round(float(value) / float(valor_actual), 2)
         valor_moneda = obtener_valor(url)
         for i in range(len(money_type)):
             if money_type[i][0] == tipo_cambio:
