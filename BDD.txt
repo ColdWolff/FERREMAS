@@ -1,0 +1,47 @@
+CREATE DATABASE ferremas;
+USE ferremas;
+
+#DROP DATABASE ferremas;
+
+CREATE TABLE cliente (
+    rut_cli VARCHAR(10) PRIMARY KEY,
+    nombre_cli VARCHAR(100) NOT NULL,
+    email_cli VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE empleado (
+    rut_emp VARCHAR(10) PRIMARY KEY,
+    nombre_emp VARCHAR(100) NOT NULL,
+    email_emp VARCHAR(100) NOT NULL,
+    telefono_emp VARCHAR(20),
+    cargo VARCHAR(15)
+);
+
+CREATE TABLE categoria (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nom_cat VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE proveedor(
+    id_proveedor INT AUTO_INCREMENT PRIMARY KEY,
+    nom_prov VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE producto (
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    marca VARCHAR(10) NOT NULL,
+    codigo_prod VARCHAR(10) NOT NULL,
+    nombre_prod VARCHAR(100) NOT NULL,
+    desc_prod VARCHAR(300),
+    precio_prod INT NOT NULL,
+    foto_prod LONGBLOB,
+	id_categoria INT NOT NULL,
+    FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
+);
+
+CREATE TABLE stock (
+    id_stock INT AUTO_INCREMENT PRIMARY KEY,
+    cantidad INT NOT NULL,
+    id_producto INT NOT NULL,
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
