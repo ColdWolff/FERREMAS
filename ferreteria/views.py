@@ -178,3 +178,10 @@ def carrito(request):
         request,
         "carrito.html",
     )
+
+def add_cat(request):
+    return render(
+        request,
+        "add_cat.html",
+    )
+
