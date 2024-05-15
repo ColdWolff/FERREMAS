@@ -1,5 +1,7 @@
 from django.db import models
 
+# [SOLO SI ES NECESARIO] pip install mysqlclient    
+# [SOLO SI ES NECESARIO] pip install pymysql
 # py manage.py makemigrations
 # py manage.py migrate
 

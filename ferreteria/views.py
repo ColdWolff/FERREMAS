@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 import json
-from .models import Producto, Categoria, Stock
+from .models import Producto, Categoria, Stock, Proveedor
 from urllib.request import urlopen
 from django.shortcuts import render
 
@@ -158,7 +158,8 @@ def reconvertir_divisa(request):
 def productoAdd(request):
     if request.method != "POST":
         categorias = Categoria.objects.all()
-        context={'categorias':categorias}
+        marcas = Proveedor.objects.all()
+        context={'categorias':categorias, 'marcas':marcas}
         return render(request, 'add_prod.html', context)
     else:
         marca = request.POST["marca"]
@@ -170,30 +171,85 @@ def productoAdd(request):
         id_categoria = request.POST["id_categoria"]
 
         objCategoria = Categoria.objects.get(id_categoria = id_categoria)
-        obj= Producto.objects.create(   id_categoria= objCategoria,
-                                        marca = marca,
+        objMarca = Proveedor.objects.get(id_proveedor = marca)
+        objMarca = objMarca.nom_prov
+        obj= Producto.objects.create(   marca = objMarca,
                                         codigo_prod = codigo_prod,
                                         nombre_prod = nombre_prod,
                                         desc_prod = desc_prod,
-                                        precio_prod = precio_prod)
+                                        precio_prod = precio_prod,
+                                        id_categoria= objCategoria)
         obj.save()
         categorias= Categoria.objects.all()
-        context= {'categorias':categorias, 'mensaje':"Producto Registrado..."}
+        marcas = Proveedor.objects.all()
+        context= {'categorias':categorias, 'marcas':marcas, 'mensaje':"Producto Registrado..."}
         return render(request, 'add_prod.html', context)
+
+def productoRead(request,pk):
+    if pk != "":
+        productos = Producto.objects.get(id_producto=pk)
+        categorias = Categoria.objects.all()
+        marcas = Proveedor.objects.all()
+
+        context= {'productos': productos, 'categorias': categorias, 'marcas': marcas}
+        if productos:
+            return render(request, 'update_prod.html', context)
+        else:
+            context= {'mensaje': "Error, producto no existe..."}
+            return render(request, 'list_prod.html', context)
+
+def productoUpdate(request):
+    if request.method == "POST":
+        id_producto = request.POST["id_producto"]
+        marca = request.POST["marca"]
+        codigo_prod = request.POST["codigo_prod"]
+        nombre_prod = request.POST["nombre_prod"]
+        desc_prod = request.POST["desc_prod"]
+        precio_prod = request.POST["precio_prod"]
+        #foto_prod = request.POST["foto_prod"]
+        id_categoria = request.POST["id_categoria"]
+
+        objCategoria = Categoria.objects.get(id_categoria = id_categoria)
+        objMarca = Proveedor.objects.get(id_proveedor = marca)
+        objMarca = objMarca.nom_prov
+
+        producto = Producto.objects.get(id_producto = id_producto)
+        producto.marca = objMarca
+        producto.codigo_prod = codigo_prod
+        producto.nombre_prod = nombre_prod
+        producto.desc_prod = desc_prod
+        producto.precio_prod = precio_prod
+        #producto.foto_prod = foto_prod
+        producto.id_categoria = objCategoria
+        producto.save()
+        
+        productos = Producto.objects.all()
+        categorias = Categoria.objects.all()
+        marcas = Proveedor.objects.all()
+        context={'mensaje':"Ok, datos actualizados...",'productos': productos,'categorias': categorias, 'marcas': marcas, 'producto': producto}
+        return render(request, 'list_prod.html',context)
+    else:
+        productos = Producto.objects.all()
+        context={'productos': productos}
+        return render(request, 'list_prod.html',context)  
     
 def productoDel(request, pk):
     context={}
     try:
-        producto = Producto.objects.get(id_prod = pk)
+        producto = Producto.objects.get(id_producto = pk)
         producto.delete()
         productos = Producto.objects.all()
         context = {'productos':productos, 'mensaje':"Producto eliminado"}
-        return render(request, 'productos_list.html', context)
+        return render(request, 'list_prod.html', context)
     except:
         productos= Producto.objects.all()
         context = {'productos':productos, 'mensaje':"Error"}
-        return render(request, 'productos_list.html', context)
+        return render(request, 'list_prod.html', context)
 
+def productoList(request):
+    productos = Producto.objects.all()
+    context={'productos':productos}
+    return render(request,"list_prod.html",context)
 
 def index(request):
     return render(
