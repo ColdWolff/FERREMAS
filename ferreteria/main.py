@@ -3,6 +3,8 @@ from app import app
 from config import mysql
 from flask import jsonify
 from flask import flash, request
+from django.shortcuts import render
+
 
 #C
 @app.route('/create/<name>/<email>/<int:phone>/<address>', methods=['POST'])
@@ -307,8 +309,36 @@ def showMessage(error=None):
     respone = jsonify(message)
     respone.status_code = 404
     return respone
+
+#CATEGORIA
+#C
+@app.route('/create_cat')
+def create_cat():
+    if request.method == "GET":
+        return render(request, "add_cat.html")
+    elif request.method == "POST":
+        try:
+                conn = mysql.connect()
+                cursor = conn.cursor(pymysql.cursors.DictCursor)
+                sqlQuery = "INSERT INTO categoria(desc_cat) VALUES(%s)"
+                desc_cat = request.POST.get("desc_cat")
+                bindData = (desc_cat)            
+                cursor.execute(sqlQuery, bindData)
+                conn.commit()
+                respone = jsonify('Categoria añadida exitosamente!')
+                respone.status_code = 200
+                return respone
+        except Exception as e:
+            print(e)
+        finally:
+            cursor.close() 
+            conn.close()
+    else:
+         print('f')
+
         
 if __name__ == "__main__":
     app.run()
 
 
+    

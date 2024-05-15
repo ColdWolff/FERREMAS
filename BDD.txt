@@ -1,0 +1,16 @@
+CREATE DATABASE ferremas;
+USE ferremas;
+
+#DROP DATABASE ferremas;
+
+INSERT INTO `ferremas`.`ferreteria_categoria` (`desc_cat`) VALUES ('Herramientas Manuales');
+INSERT INTO `ferremas`.`ferreteria_categoria` (`desc_cat`) VALUES ('Materiales Básicos');
+INSERT INTO `ferremas`.`ferreteria_categoria` (`desc_cat`) VALUES ('Equipos de Seguridad');
+INSERT INTO `ferremas`.`ferreteria_categoria` (`desc_cat`) VALUES ('Tornillos y Anclajes');
+INSERT INTO `ferremas`.`ferreteria_categoria` (`desc_cat`) VALUES ('Fijaciones y Adhesivos');
+INSERT INTO `ferremas`.`ferreteria_categoria` (`desc_cat`) VALUES ('Equipos de Medición');
+
+INSERT INTO `ferremas`.`ferreteria_proveedor` (`nom_prov`) VALUES ('Bosch');
+INSERT INTO `ferremas`.`ferreteria_proveedor` (`nom_prov`) VALUES ('Makita');
+INSERT INTO `ferremas`.`ferreteria_proveedor` (`nom_prov`) VALUES ('Stanley');
+INSERT INTO `ferremas`.`ferreteria_proveedor` (`nom_prov`) VALUES ('Sika ');
