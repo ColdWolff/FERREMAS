@@ -16,13 +16,17 @@
 
 <body>
     <section>
+
+
+
+
         <div class="container">
             <h1>Lista de Productos</h1>
             <br>
-            <button type="button">
-                <a href="/create_prod">Agregar</a>
-            </button>
-    
+            <div style="margin-bottom: 10px;">
+                <a class="btn-add" href="/create_prod">Agregar</a>
+            </div>
+
             <table>
                 {% if productos %}
                     <th>ID</th>
@@ -43,8 +47,8 @@
                             <td>{{ x.desc_prod }}</td>
                             <td>{{ x.precio_prod }}</td>
                             <td>{{ x.id_categoria.desc_cat }}</td>
-                            <td><a href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
-                            <td><a href="{% url 'read_prod' pk=x.id_producto %}">Modificar</a></td>
+                            <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
+                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Modificar</a></td>
                         </tr>
                     {% endfor %}
                 {% endif %}
