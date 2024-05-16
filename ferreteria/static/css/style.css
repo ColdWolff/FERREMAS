@@ -100,56 +100,6 @@ button{
         color: #000;
     }
 
-.btn-add{
-    padding: 7px 20px 7px 20px;
-    text-align: center;
-    margin-right: 10px;
-    background: #1a6ac5;
-    border-radius: 5px;
-    color: #ece6e6;
-    text-decoration: none;
-    margin-bottom: 10px;
-}
-    .btn-add:hover{
-        background:#2b8eff;
-        color: #ece6e6;
-    }
-
-
-.btn-delete{
-    padding: 7px 20px 7px 20px;
-    text-align: center;
-    margin-right: 10px;
-    margin-left: 10px;
-    background: #b82b2b;
-    border-radius: 5px;
-    color: #ece6e6;
-    text-decoration: none;
-    margin-bottom: 10px;
-    align-self: center;
-}
-    .btn-delete:hover{
-        background:#e62a2a;
-        color: #ece6e6;
-    }
-
-.btn-update{
-    padding: 7px 20px 7px 20px;
-    text-align: center;
-    margin-right: 10px;
-    margin-left: 10px;
-    background: #d4841b;
-    border-radius: 5px;
-    color: #ece6e6;
-    text-decoration: none;
-    margin-bottom: 10px;
-}
-    .btn-update:hover{
-        background:#ffa735;
-        color: #ece6e6;
-    }
-
-
 .btn-sign{
     padding: 7px 20px 7px 20px;
     text-align: center;
@@ -446,3 +396,54 @@ header{
     font-size: 14px;
     margin-top: 5px;
 }
+
+
+/* Display */
+.btn-add{
+    padding: 7px 20px 7px 20px;
+    text-align: center;
+    margin-right: 10px;
+    background: #1a6ac5;
+    border-radius: 5px;
+    color: #ece6e6;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+    .btn-add:hover{
+        background:#2b8eff;
+        color: #ece6e6;
+    }
+
+
+.btn-delete{
+    padding: 7px 20px 7px 20px;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: #b82b2b;
+    border-radius: 5px;
+    color: #ece6e6;
+    text-decoration: none;
+    margin-bottom: 10px;
+    align-self: center;
+}
+    .btn-delete:hover{
+        background:#e62a2a;
+        color: #ece6e6;
+    }
+
+.btn-update{
+    padding: 7px 20px 7px 20px;
+    text-align: center;
+    margin-right: 10px;
+    margin-left: 10px;
+    background: #d4841b;
+    border-radius: 5px;
+    color: #ece6e6;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+    .btn-update:hover{
+        background:#ffa735;
+        color: #ece6e6;
+    }
