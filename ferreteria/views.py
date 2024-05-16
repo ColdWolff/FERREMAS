@@ -155,6 +155,7 @@ def reconvertir_divisa(request):
     else:
         return HttpResponse(status=405)
     
+#C   
 def productoAdd(request):
     if request.method != "POST":
         categorias = Categoria.objects.all()
@@ -182,9 +183,11 @@ def productoAdd(request):
         obj.save()
         categorias= Categoria.objects.all()
         marcas = Proveedor.objects.all()
-        context= {'categorias':categorias, 'marcas':marcas, 'mensaje':"Producto Registrado..."}
-        return render(request, 'add_prod.html', context)
+        productos = Producto.objects.all()
+        context= {'categorias':categorias, 'marcas':marcas, 'productos':productos,'mensaje':"Producto Registrado...",}
+    return render(request, 'list_prod.html', context)
 
+#R
 def productoRead(request,pk):
     if pk != "":
         productos = Producto.objects.get(id_producto=pk)
@@ -198,6 +201,7 @@ def productoRead(request,pk):
             context= {'mensaje': "Error, producto no existe..."}
             return render(request, 'list_prod.html', context)
 
+#U
 def productoUpdate(request):
     if request.method == "POST":
         id_producto = request.POST["id_producto"]
@@ -232,7 +236,8 @@ def productoUpdate(request):
         productos = Producto.objects.all()
         context={'productos': productos}
         return render(request, 'list_prod.html',context)  
-    
+
+#D   
 def productoDel(request, pk):
     context={}
     try:
@@ -246,6 +251,7 @@ def productoDel(request, pk):
         context = {'productos':productos, 'mensaje':"Error"}
         return render(request, 'list_prod.html', context)
 
+#L
 def productoList(request):
     productos = Producto.objects.all()
     context={'productos':productos}

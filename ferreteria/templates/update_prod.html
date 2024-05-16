@@ -23,8 +23,7 @@
                 <form action="{% url 'update_prod' %}" method="POST">
                     {% csrf_token %}
                     
-                    <input type="hidden" name="id_producto" value="{{ productos.id_producto }}">
-                    <pre>Id producto: <input type="number" name="id_producto_disabled" value="{{productos.id_producto}}" disabled></pre>
+                    <input type="hidden" name="id_producto" value="{{productos.id_producto}}">
                     <pre>Marca:        <select name="marca">
                         {% for marca in marcas %}
                             {% if marca.id_proveedor == productos.marca.id_proveedor %}
