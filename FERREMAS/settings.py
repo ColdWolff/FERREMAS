@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'FERREMAS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'applied-primacy-405823:us-east1:ferremas',
-        'USER': 'ferremas',  # Agrega el nombre de usuario de la base de datos
-        'PASSWORD': 'Ferremas2024',  # Agrega la contraseña de la base de datos
-        'HOST': '35.243.252.134',
+        'NAME': 'ferremas',
+        'USER': 'root',
+        'PASSWORD': 'Ferremas2024',
+        'HOST': 'localhost',
         'PORT': 3306,
     }
 }
