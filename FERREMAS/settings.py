@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'FERREMAS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ferremas',
+        'NAME': 'railway',
         'USER': 'root',
         'PASSWORD': 'NIBpyaUomocMDFJQgYuUJKaoJxwahBZT',
         'HOST': 'roundhouse.proxy.rlwy.net',
