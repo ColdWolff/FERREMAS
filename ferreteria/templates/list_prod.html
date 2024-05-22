@@ -37,6 +37,7 @@
                     <th>Precio</th>
                     <th>Categoria</th>
                     <th>Eliminar</th>
+                    <th>Detalles</th>
                     <th>Modificar</th>
                     {% for x in productos %}
                         <tr>
@@ -48,7 +49,8 @@
                             <td>{{ x.precio_prod }}</td>
                             <td>{{ x.id_categoria.desc_cat }}</td>
                             <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
-                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Modificar</a></td>
+                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Detalles</a></td>
+                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'update_prod' pk=x.id_producto %}">Modificar</a></td>
                         </tr>
                     {% endfor %}
                 {% endif %}

@@ -195,7 +195,7 @@ def productoRead(request,pk):
 
         context= {'productos': productos, 'categorias': categorias, 'marcas': marcas}
         if productos:
-            return render(request, 'update_prod.html', context)
+            return render(request, 'detail_prod.html', context)
         else:
             context= {'mensaje': "Error, producto no existe..."}
             return render(request, 'list_prod.html', context)
