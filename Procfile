@@ -1,0 +1,1 @@
+web: gunicorn FERREMAS.wsgi --log-file -

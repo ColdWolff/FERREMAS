@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from . import views
 
@@ -19,4 +21,5 @@ urlpatterns = [
     path('update_prod', views.productoUpdate, name='update_prod'),
     path('delete_prod/<str:pk>', views.productoDel, name='delete_prod'),
     path('list_prod', views.productoList, name='list_prod'),
-]
+] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+
