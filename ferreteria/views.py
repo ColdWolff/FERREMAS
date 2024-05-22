@@ -195,7 +195,7 @@ def productoRead(request,pk):
 
         context= {'productos': productos, 'categorias': categorias, 'marcas': marcas}
         if productos:
-            return render(request, 'detail_prod.html', context)
+            return render(request, 'update_prod.html', context)
         else:
             context= {'mensaje': "Error, producto no existe..."}
             return render(request, 'list_prod.html', context)
@@ -209,7 +209,6 @@ def productoUpdate(request):
         nombre_prod = request.POST["nombre_prod"]
         desc_prod = request.POST["desc_prod"]
         precio_prod = request.POST["precio_prod"]
-        #foto_prod = request.POST["foto_prod"]
         id_categoria = request.POST["id_categoria"]
 
         objCategoria = Categoria.objects.get(id_categoria = id_categoria)
@@ -222,7 +221,6 @@ def productoUpdate(request):
         producto.nombre_prod = nombre_prod
         producto.desc_prod = desc_prod
         producto.precio_prod = precio_prod
-        #producto.foto_prod = foto_prod
         producto.id_categoria = objCategoria
         producto.save()
         
