@@ -168,7 +168,6 @@ def productoAdd(request):
         nombre_prod = request.POST["nombre_prod"]
         desc_prod = request.POST["desc_prod"]
         precio_prod = request.POST["precio_prod"]
-        #foto_prod = request.POST["foto_prod"]
         id_categoria = request.POST["id_categoria"]
 
         objCategoria = Categoria.objects.get(id_categoria = id_categoria)
