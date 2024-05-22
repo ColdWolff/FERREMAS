@@ -37,7 +37,6 @@ class Producto(models.Model):
     nombre_prod = models.CharField(max_length=100)
     desc_prod = models.CharField(max_length=300)
     precio_prod = models.IntegerField()
-    foto_prod = models.BinaryField(blank=True, null=True)
     id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
 class Stock(models.Model):
