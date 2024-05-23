@@ -33,11 +33,12 @@
                     <div class="row">
                         <div class="col">
                             <label for="cantidad">Cantidad a agregar:</label>
-                            <input type="number" name="cantidad" class="form-control" value="{{stocks.cantidad}}" required>
+                            <input type="number" name="cantidad" class="form-control" value="" required>
                         </div>
-                            <input type="hidden" name="id_producto" class="form-control" value="{{stocks.id_producto}}" required>
                     </div>
-    
+                   
+                    <input type="hidden" name="id_producto" class="form-control" value="{{stocks.id_producto}}">
+
                     <div class="text-center" style="margin-top: 10px;">
                         <input type="submit" name="opcion" class="btn-update" value="Actualizar">
                     </div>

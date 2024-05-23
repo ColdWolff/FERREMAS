@@ -290,7 +290,7 @@ def stockRead(request,pk):
 
         context= {'productos': productos, 'stocks': stocks}
         if stocks:
-            return render(request, 'add_prod.html', context)
+            return render(request, 'update_stock.html', context)
         else:
             context= {'mensaje': "Error, stock no existe..."}
             return render(request, 'list_stock.html', context)
@@ -298,19 +298,26 @@ def stockRead(request,pk):
 #U
 def stockUpdate(request):
     if request.method == "POST":
+        print("Accedpi a update")
         id_stock = request.POST["id_stock"]
         cantidad = request.POST["cantidad"]
-        id_producto = request.POST["id_producto"]
+        #id_producto = request.POST["id_producto"]
+        print("llame las variables")
 
-        objProducto = Producto.objects.get(id_producto = id_producto)
+        #objProducto = Producto.objects.get(id_producto = id_producto)
+        print("seteo objeto")
 
         stock = Stock.objects.get(id_stock = id_stock)
-        stock.cantidad = stock.cantidad + cantidad
-        stock.id_producto = objProducto
+        print("id stock")
+        stock.cantidad = cantidad
+        print("cantidad")
+        #stock.id_producto = objProducto
         stock.save()
+        print("guardo")
         
         productos = Producto.objects.all()
         stocks = Stock.objects.all()
+        print("llamo todos")
         context={'mensaje':"Ok, datos actualizados...",'productos': productos,'stocks': stocks, 'stock': stock}
         return render(request, 'list_stock.html',context)
     else:
