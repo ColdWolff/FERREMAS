@@ -17,9 +17,6 @@
 <body>
     <section>
 
-
-
-
         <div class="container">
             <h1>Lista de Productos</h1>
             <br>
@@ -36,9 +33,8 @@
                     <th>Descripción</th>
                     <th>Precio</th>
                     <th>Categoria</th>
-                    <th>Detalles</th>
-                    <th>Eliminar</th>
                     <th>Modificar</th>
+                    <th>Eliminar</th>
                     {% for x in productos %}
                         <tr>
                             <td>{{ x.id_producto}}</td>
@@ -48,9 +44,8 @@
                             <td>{{ x.desc_prod }}</td>
                             <td>{{ x.precio_prod }}</td>
                             <td>{{ x.id_categoria.desc_cat }}</td>
+                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Modificar</a></td>
                             <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
-                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Detalles</a></td>
-                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'update_prod' pk=x.id_producto %}">Modificar</a></td>
                         </tr>
                     {% endfor %}
                 {% endif %}

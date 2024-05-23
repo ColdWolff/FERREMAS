@@ -16,38 +16,62 @@
 
 <body>
     <section>
-
         <div class="container">
+
+            <div style="margin-bottom: 10px;">
+                <a style="text-decoration: none;color: black;" href="/list_prod"> <i style="color: black;" class="fa-solid fa-arrow-left"></i> Volver </a>
+            </div>
+
             {% if productos %}
                 <h2>Formulario Actualizar Datos</h2><br>
                 <form action="{% url 'update_prod' %}" method="POST">
                     {% csrf_token %}
                     
                     <input type="hidden" name="id_producto" value="{{productos.id_producto}}">
-                    <pre>Marca:        <select name="marca">
-                        {% for marca in marcas %}
-                            {% if marca.id_proveedor == productos.marca.id_proveedor %}
-                                <option value="{{marca.id_proveedor}}" selected>{{marca.nom_prov}}</option>
-                            {% else %}
-                            <option value="{{marca.id_proveedor}}">{{marca.nom_prov}}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select></pre>
-                    <pre>Codigo:       <input type="text" name="codigo_prod" value="{{productos.codigo_prod}}"></pre>
-                    <pre>Nombre:   <input type="text" name="nombre_prod" value="{{productos.nombre_prod}}"></pre>
-                    <pre>Descripción:      <input type="text" name="desc_prod" value="{{productos.desc_prod}}"></pre>
-                    <pre>Precio:         <input type="text" name="precio_prod" value="{{productos.precio_prod}}"></pre>
-                    <pre>Categoria:      <select name="id_categoria">
-                        {% for categoria in categorias %}
-                            {% if categoria.id_categoria == productos.categoria.id_categoria %}
-                                <option value="{{categoria.id_categoria}}" selected>{{categoria.desc_cat}}</option>
-                            {% else %}
-                                <option value="{{categoria.id_categoria}}">{{categoria.desc_cat}}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select></pre>
+                    <div class="form-group mb-3">
+                        <label for="marca">Marca:</label>
+                        <select name="marca" class="form-control">
+                            {% for marca in marcas %}
+                                {% if marca.id_proveedor == productos.marca.id_proveedor %}
+                                    <option value="{{marca.id_proveedor}}" selected>{{marca.nom_prov}}</option>
+                                {% else %}
+                                    <option value="{{marca.id_proveedor}}">{{marca.nom_prov}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="codigo_prod">Código:</label>
+                        <input type="text" name="codigo_prod" class="form-control" value="{{productos.codigo_prod}}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="nombre_prod">Nombre:</label>
+                        <input type="text" name="nombre_prod" class="form-control" value="{{productos.nombre_prod}}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="desc_prod">Descripción:</label>
+                        <input type="text" name="desc_prod" class="form-control" value="{{productos.desc_prod}}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="precio_prod">Precio:</label>
+                        <input type="text" name="precio_prod" class="form-control" value="{{productos.precio_prod}}">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="id_categoria">Categoría:</label>
+                        <select name="id_categoria" class="form-control">
+                            {% for categoria in categorias %}
+                                {% if categoria.id_categoria == productos.categoria.id_categoria %}
+                                    <option value="{{categoria.id_categoria}}" selected>{{categoria.desc_cat}}</option>
+                                {% else %}
+                                    <option value="{{categoria.id_categoria}}">{{categoria.desc_cat}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                    <input type="submit" name="opcion" class="btn-update" value="Actualizar">
+                    <div class="text-center">
+                        <input type="submit" name="opcion" class="btn-update" value="Actualizar">
+                    </div>
 
                 </form><br><br>
             {% endif %}
