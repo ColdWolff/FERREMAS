@@ -398,6 +398,7 @@ header{
 .btn-add{
     padding: 7px 20px 7px 20px;
     text-align: center;
+    margin-top: 10px;
     margin-right: 10px;
     background: #1a6ac5;
     border-radius: 5px;
