@@ -35,8 +35,8 @@
                             <td hidden> {{x.id_stock}} </td>
                             <td>{{ x.cantidad }}</td>
                             <td>{{ x.id_producto.nombre_prod }}</td>
-                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_stock' pk=x.id_producto %}">Modificar</a></td>
-                            <td style="text-align: center;" ><a  class="btn-delete">Eliminar</a></td>
+                            <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_stock' pk=x.id_stock %}">Modificar</a></td>
+                            <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_stock' pk=x.id_stock %}">Eliminar</a></td>
                         </tr>
                     {% endfor %}
                 {% endif %}

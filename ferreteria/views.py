@@ -265,13 +265,21 @@ def stockAdd(request):
         cantidad = request.POST["cantidad"]
         id_producto = request.POST["id_producto"]
 
-        objProducto = Producto.objects.get(id_producto = id_producto)
-        obj= Stock.objects.create(  cantidad = cantidad,
-                                    id_producto = objProducto)
-        obj.save()
-        productos = Producto.objects.all()
-        stocks = Stock.objects.all()
-        context= {'stocks':stocks, 'productos':productos,'mensaje':"Stock Registrado...",}
+        # Verificar si ya existe un registro de stock para este producto
+        if Stock.objects.filter(id_producto=id_producto).exists():
+            productos = Producto.objects.all()
+            stocks = Stock.objects.all()
+            context= {'stocks':stocks, 'productos':productos,'mensaje':"Ya existe un registro de stock para este producto.",}
+        else:
+            objProducto = Producto.objects.get(id_producto=id_producto)
+            obj = Stock.objects.create(
+                cantidad=cantidad,
+                id_producto=objProducto
+            )
+            obj.save()
+            productos = Producto.objects.all()
+            stocks = Stock.objects.all()
+            context= {'stocks':stocks, 'productos':productos,'mensaje':"Stock Registrado...",}
     return render(request, 'add_stock.html', context)
 
 #R
@@ -299,7 +307,7 @@ def stockDel(request, pk):
     except:
         stocks = Stock.objects.all()
         context = {'stocks':stocks, 'mensaje':"Error"}
-        return render(request, 'list_prod.html', context)
+        return render(request, 'list_stock.html', context)
             
 #L
 def stockList(request):

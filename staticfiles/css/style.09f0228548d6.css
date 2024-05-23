@@ -10,7 +10,7 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th, tr td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -63,7 +63,7 @@ button{
 }
 
 .my_navbar {
-    background:url(../img/headerbck.png);
+    background:url("../img/headerbck.4b600d03c01d.png");
     background-size:cover;
     background-position: center;
 }
