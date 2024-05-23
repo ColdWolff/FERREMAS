@@ -298,32 +298,21 @@ def stockRead(request,pk):
 #U
 def stockUpdate(request):
     if request.method == "POST":
-        print("Accedpi a update")
         id_stock = request.POST["id_stock"]
-        cantidad = request.POST["cantidad"]
-        #id_producto = request.POST["id_producto"]
-        print("llame las variables")
-
-        #objProducto = Producto.objects.get(id_producto = id_producto)
-        print("seteo objeto")
+        cantidad = int(request.POST["cantidad"])
 
         stock = Stock.objects.get(id_stock = id_stock)
-        print("id stock")
-        stock.cantidad = cantidad
-        print("cantidad")
-        #stock.id_producto = objProducto
+        stock.cantidad += cantidad 
         stock.save()
-        print("guardo")
-        
+
         productos = Producto.objects.all()
         stocks = Stock.objects.all()
-        print("llamo todos")
-        context={'mensaje':"Ok, datos actualizados...",'productos': productos,'stocks': stocks, 'stock': stock}
-        return render(request, 'list_stock.html',context)
+        context = {'mensaje': "Ok, datos actualizados...", 'productos': productos, 'stocks': stocks, 'stock': stock}
+        return render(request, 'update_stock.html', context)
     else:
         stocks = Stock.objects.all()
         context={'stocks': stocks}
-        return render(request, 'list_stocks.html',context)  
+        return render(request, 'list_stock.html',context)
 
 #D   
 def stockDel(request, pk):
