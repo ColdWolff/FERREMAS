@@ -257,6 +257,44 @@ def productoList(request):
     context={'productos':productos}
     return render(request,"list_prod.html",context)
 
+#C
+def stockAdd(request):
+    if request.method != "POST":
+        productos = Producto.objects.all()
+        context={'productos':productos}
+        return render(request, '.html', context)
+    else:
+        cantidad = request.POST["cantidad"]
+        id_producto = request.POST["id_producto"]
+
+        objProducto = Producto.objects.get(id_producto = id_producto)
+        obj= Stock.objects.create(  cantidad = cantidad,
+                                    id_producto = objProducto)
+        obj.save()
+        productos = Producto.objects.all()
+        stocks = Stock.objects.all()
+        context= {'stocks':stocks, 'productos':productos,'mensaje':"Stock Registrado...",}
+    return render(request, '.html', context)
+
+#R
+def stockRead(request,pk):
+    if pk != "":
+        productos = Producto.objects.all()
+        stocks = Stock.objects.get(id_stock=pk)
+
+        context= {'productos': productos, 'stocks': stocks}
+        if stocks:
+            return render(request, '.html', context)
+        else:
+            context= {'mensaje': "Error, stock no existe..."}
+            return render(request, '.html', context)
+        
+#L
+def stockList(request):
+    stocks = Stock.objects.all()
+    context={'stocks': stocks}
+    return render(request,".html",context)
+
 def index(request):
     return render(
         request,
