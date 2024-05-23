@@ -17,9 +17,6 @@
 <body>
     <section>
 
-
-
-
         <div class="container">
             <h1>Lista de Productos</h1>
             <br>
@@ -29,26 +26,21 @@
 
             <table>
                 {% if productos %}
-                    <th>ID</th>
-                    <th>Marca</th>
                     <th>Codigo</th>
+                    <th>Marca</th>
                     <th>Nombre</th>
-                    <th>Descripción</th>
                     <th>Precio</th>
-                    <th>Categoria</th>
-                    <th>Eliminar</th>
                     <th>Modificar</th>
+                    <th>Eliminar</th>
                     {% for x in productos %}
                         <tr>
-                            <td>{{ x.id_producto}}</td>
-                            <td>{{ x.marca }}</td>
+                            <td hidden> {{x.id_producto}} </td>
                             <td>{{ x.codigo_prod }}</td>
+                            <td>{{ x.marca }}</td>
                             <td>{{ x.nombre_prod }}</td>
-                            <td>{{ x.desc_prod }}</td>
-                            <td>{{ x.precio_prod }}</td>
-                            <td>{{ x.id_categoria.desc_cat }}</td>
-                            <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
+                            <td> ${{ x.precio_prod }}</td>
                             <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Modificar</a></td>
+                            <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
                         </tr>
                     {% endfor %}
                 {% endif %}

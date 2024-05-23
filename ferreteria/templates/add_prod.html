@@ -18,6 +18,11 @@
     <section>
 
         <div class="container">
+            
+            <div style="margin-bottom: 10px;">
+                <a style="text-decoration: none;color: black;" href="/list_prod"> <i style="color: black;" class="fa-solid fa-arrow-left"></i> Volver </a>
+            </div>
+
             <form action="/create_prod" method="POST" class="mb-3" autocomplete="off" enctype="multipart/form-data">
                 {% csrf_token %}
                 <h2>
@@ -34,18 +39,18 @@
                         <input type="text" name="desc_prod" class="form-control" required>
                     </div>
                 </div>
-
+            
                 <div class="row">
                     <div class="col">
                         <label for="precio_prod">Precio Producto</label>
                         <input type="number" name="precio_prod" class="form-control" required>
                     </div>
                     <div class="col">
-                        <label for="codigo_prod">Codigo Producto</label>
+                        <label for="codigo_prod">Código Producto</label>
                         <input type="text" name="codigo_prod" class="form-control" required>
                     </div>                    
                 </div>
-
+            
                 <div class="row">
                     <div class="col">
                         <label for="marca">Marca Producto</label>                         
@@ -57,18 +62,18 @@
                         </select> 
                     </div>
                     <div class="col">
-                        <label for="id_categoria">Categoria</label>   
+                        <label for="id_categoria">Categoría</label>   
                         <select name="id_categoria" class="form-control" required>
                             <option value="">Seleccione la categoría del producto</option>
                             {% for categoria in categorias %}
                             <option value="{{ categoria.id_categoria }}">{{ categoria.desc_cat }}</option>
                             {% endfor %}
                         </select>                  
+                    </div>
                 </div>
-                
-                <hr>
-
-                <input style="align-items: center;" class="btn-add" type="submit" value="Guardar Registro">
+                <div style="margin-top: 10px !important; text-align: center;">
+                    <input class="btn-add" type="submit" value="Guardar Registro">
+                </div>
             </form>
         </div>
     </section>

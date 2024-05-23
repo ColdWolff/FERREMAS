@@ -16,44 +16,78 @@
 
 <body>
     <section>
-
         <div class="container">
+            <div style="margin-bottom: 10px;">
+                <a style="text-decoration: none;color: black;" href="/list_prod">
+                    <i style="color: black;" class="fa-solid fa-arrow-left"></i> Volver
+                </a>
+            </div>
+    
             {% if productos %}
-                <h2>Formulario Actualizar Datos</h2><br>
-                <form action="{% url 'update_prod' %}" method="POST">
+                <h2>Actualizar Datos del Producto</h2>
+                <form action="{% url 'update_prod' %}" method="POST" autocomplete="off">
                     {% csrf_token %}
-                    
+    
                     <input type="hidden" name="id_producto" value="{{productos.id_producto}}">
-                    <pre>Marca:        <select name="marca">
-                        {% for marca in marcas %}
-                            {% if marca.id_proveedor == productos.marca.id_proveedor %}
-                                <option value="{{marca.id_proveedor}}" selected>{{marca.nom_prov}}</option>
-                            {% else %}
-                            <option value="{{marca.id_proveedor}}">{{marca.nom_prov}}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select></pre>
-                    <pre>Codigo:       <input type="text" name="codigo_prod" value="{{productos.codigo_prod}}"></pre>
-                    <pre>Nombre:   <input type="text" name="nombre_prod" value="{{productos.nombre_prod}}"></pre>
-                    <pre>Descripción:      <input type="text" name="desc_prod" value="{{productos.desc_prod}}"></pre>
-                    <pre>Precio:         <input type="text" name="precio_prod" value="{{productos.precio_prod}}"></pre>
-                    <pre>Categoria:      <select name="id_categoria">
-                        {% for categoria in categorias %}
-                            {% if categoria.id_categoria == productos.categoria.id_categoria %}
-                                <option value="{{categoria.id_categoria}}" selected>{{categoria.desc_cat}}</option>
-                            {% else %}
-                                <option value="{{categoria.id_categoria}}">{{categoria.desc_cat}}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select></pre>
-
-                    <input type="submit" name="opcion" class="btn-update" value="Actualizar">
-
-                </form><br><br>
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombre_prod">Nombre:</label>
+                            <input type="text" name="nombre_prod" class="form-control" value="{{productos.nombre_prod}}" required>
+                        </div>
+                        <div class="col">
+                            <label for="desc_prod">Descripción:</label>
+                            <textarea name="desc_prod" class="form-control" required>{{productos.desc_prod}}</textarea>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col">
+                            <label for="precio_prod">Precio:</label>
+                            <input type="number" name="precio_prod" class="form-control" value="{{productos.precio_prod}}" required>
+                        </div>
+                        <div class="col">
+                            <label for="codigo_prod">Código:</label>
+                            <input type="text" name="codigo_prod" class="form-control" value="{{productos.codigo_prod}}" required>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col">
+                            <label for="marca">Marca:</label>
+                            <select name="marca" class="form-control" required>
+                                {% for marca in marcas %}
+                                    {% if productos.marca == marca.nom_prov %}
+                                        <option value="{{marca.id_proveedor}}" selected>{{marca.nom_prov}}</option>
+                                    {% else %}
+                                        <option value="{{marca.id_proveedor}}">{{marca.nom_prov}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="id_categoria">Categoría:</label>
+                            <select name="id_categoria" class="form-control" required>
+                                {% for categoria in categorias %}
+                                    {% if categoria.id_categoria == producto.id_categoria %}
+                                        <option value="{{categoria.id_categoria}}" selected>{{categoria.desc_cat}}</option>
+                                    {% else %}
+                                        <option value="{{categoria.id_categoria}}">{{categoria.desc_cat}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="text-center" style="margin-top: 10px;">
+                        <input type="submit" name="opcion" class="btn-update" value="Actualizar">
+                    </div>
+                </form>
+                <br><br>
             {% endif %}
+    
             <div id="idMensajes">
                 {% if mensaje %}
-                {{mensaje}}
+                    {{mensaje}}
                 {% endif %}
             </div>
         </div>

@@ -12,9 +12,8 @@ table {
 th, td {
     border: 1px solid black;
     padding: 8px;
-    text-align: center;
+    text-align: left;
 }
-
 
 button{
     margin-bottom: 10px;
@@ -62,7 +61,7 @@ button{
 }
 
 .my_navbar {
-    background:url(../img/headerbck.png);
+    background:url("../img/headerbck.4b600d03c01d.png");
     background-size:cover;
     background-position: center;
 }
@@ -399,7 +398,6 @@ header{
 .btn-add{
     padding: 7px 20px 7px 20px;
     text-align: center;
-    margin-top: 10px;
     margin-right: 10px;
     background: #1a6ac5;
     border-radius: 5px;
