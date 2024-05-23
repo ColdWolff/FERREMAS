@@ -131,3 +131,6 @@ STATICFILES_DIRS = (
 )
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# pip install gunicorn
+# pip install whitenoise

@@ -21,5 +21,10 @@ urlpatterns = [
     path('update_prod', views.productoUpdate, name='update_prod'),
     path('delete_prod/<str:pk>', views.productoDel, name='delete_prod'),
     path('list_prod', views.productoList, name='list_prod'),
+
+    # STOCK
+    path("create_stock", views.stockAdd, name="create_stock"),
+    path('read_stock/<str:pk>', views.stockRead, name='read_stock'),
+    path('list_stock', views.stockList, name='list_stock'),
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 
