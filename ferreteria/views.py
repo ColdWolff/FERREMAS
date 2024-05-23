@@ -295,6 +295,29 @@ def stockRead(request,pk):
             context= {'mensaje': "Error, stock no existe..."}
             return render(request, 'list_stock.html', context)
 
+#U
+def stockUpdate(request):
+    if request.method == "POST":
+        id_stock = request.POST["id_stock"]
+        cantidad = request.POST["cantidad"]
+        id_producto = request.POST["id_producto"]
+
+        objProducto = Producto.objects.get(id_producto = id_producto)
+
+        stock = Stock.objects.get(id_stock = id_stock)
+        stock.cantidad = stock.cantidad + cantidad
+        stock.id_producto = objProducto
+        stock.save()
+        
+        productos = Producto.objects.all()
+        stocks = Stock.objects.all()
+        context={'mensaje':"Ok, datos actualizados...",'productos': productos,'stocks': stocks, 'stock': stock}
+        return render(request, 'list_stock.html',context)
+    else:
+        stocks = Stock.objects.all()
+        context={'stocks': stocks}
+        return render(request, 'list_stocks.html',context)  
+
 #D   
 def stockDel(request, pk):
     context={}

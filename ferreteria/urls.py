@@ -25,6 +25,7 @@ urlpatterns = [
     # STOCK
     path("create_stock", views.stockAdd, name="create_stock"),
     path('read_stock/<str:pk>', views.stockRead, name='read_stock'),
+    path('update_stock', views.stockUpdate, name='update_stock'),
     path('delete_stock/<str:pk>', views.stockDel, name='delete_stock'),
     path('list_stock', views.stockList, name='list_stock'),
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
