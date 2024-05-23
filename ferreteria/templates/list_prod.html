@@ -34,6 +34,7 @@
                     <th>Eliminar</th>
                     {% for x in productos %}
                         <tr>
+                            <td hidden> {{x.id_producto}} </td>
                             <td>{{ x.codigo_prod }}</td>
                             <td>{{ x.marca }}</td>
                             <td>{{ x.nombre_prod }}</td>

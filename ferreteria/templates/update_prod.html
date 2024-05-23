@@ -28,6 +28,7 @@
                 <form action="{% url 'update_prod' %}" method="POST" autocomplete="off">
                     {% csrf_token %}
     
+                    <input type="hidden" name="id_producto" value="{{productos.id_producto}}">
                     <div class="row">
                         <div class="col">
                             <label for="nombre_prod">Nombre:</label>
@@ -55,7 +56,7 @@
                             <label for="marca">Marca:</label>
                             <select name="marca" class="form-control" required>
                                 {% for marca in marcas %}
-                                    {% if marca.id_proveedor == productos.marca.id_proveedor %}
+                                    {% if productos.marca == marca.nom_prov %}
                                         <option value="{{marca.id_proveedor}}" selected>{{marca.nom_prov}}</option>
                                     {% else %}
                                         <option value="{{marca.id_proveedor}}">{{marca.nom_prov}}</option>
@@ -67,7 +68,7 @@
                             <label for="id_categoria">Categoría:</label>
                             <select name="id_categoria" class="form-control" required>
                                 {% for categoria in categorias %}
-                                    {% if categoria.id_categoria == productos.categoria.id_categoria %}
+                                    {% if categoria.id_categoria == producto.id_categoria %}
                                         <option value="{{categoria.id_categoria}}" selected>{{categoria.desc_cat}}</option>
                                     {% else %}
                                         <option value="{{categoria.id_categoria}}">{{categoria.desc_cat}}</option>
