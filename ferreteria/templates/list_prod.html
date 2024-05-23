@@ -30,6 +30,7 @@
                     <th>Marca</th>
                     <th>Nombre</th>
                     <th>Precio</th>
+                    <th>Stock</th>
                     <th>Modificar</th>
                     <th>Eliminar</th>
                     {% for x in productos %}
@@ -39,6 +40,17 @@
                             <td>{{ x.marca }}</td>
                             <td>{{ x.nombre_prod }}</td>
                             <td> ${{ x.precio_prod }}</td>
+                            <td>
+                                {% if stocks %}
+                                    {% for j in stocks %}
+                                        {% if x.id_producto == j.id_producto_id %}
+                                            {{ j.cantidad }}
+                                        {% else %}
+                                            
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
                             <td style="text-align: center;" ><a class="btn-update" href="{% url 'read_prod' pk=x.id_producto %}">Modificar</a></td>
                             <td style="text-align: center;" ><a  class="btn-delete" href="{% url 'delete_prod' pk=x.id_producto %}">Eliminar</a></td>
                         </tr>
