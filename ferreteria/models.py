@@ -38,7 +38,7 @@ class Producto(models.Model):
     codigo_prod = models.CharField(max_length=10)
     nombre_prod = models.CharField(max_length=100)
     desc_prod = models.CharField(max_length=300)
-    precio_prod = models.IntegerField()
+    precio_prod = models.FloatField()
     id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
 
 class Stock(models.Model):

@@ -446,3 +446,9 @@ header{
         background:#ffa735;
         color: #ece6e6;
     }
+
+.resumen {
+    margin: auto; 
+    max-width: 600px;
+    text-align: center; 
+}

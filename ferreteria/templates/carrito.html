@@ -1,6 +1,7 @@
 {% extends 'hnf.html' %}
 {% load static %}
 {% block content %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,60 +15,46 @@
 </head>
 
 <body>
-    <section class="contenedor">
+    <section class="contenedor" style="justify-content: space-around;">
+        <!-- Elementos del Carrito -->
+        <div class="carrito-total">
+            <h3> Tu carrito </h3>
+            {% for item in carrito %}
+            <div class="item-carrito">
+                <div class="info-producto">
+                    <span class="nombre-producto">{{ item.producto.nombre_prod }}</span>
+                    <span class="precio-producto">{{ item.producto.precio_prod }} USD</span>
+                    <div class="selector-cantidad">
+                        <a href="" class="btn-aumentar">
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
+                        <span class="cantidad">{{ item.cantidad }}</span>
+                        <a href="" class="btn-disminuir">
+                            <i class="fa-solid fa-minus"></i>
+                        </a>
+                    </div>
+                </div>
+                <span class="subtotal">{{ item.subtotal }} USD</span>
+                <a href="" class="btn-eliminar">
+                    <i class="fa-solid fa-trash-can"></i>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
         <!-- Resumen -->
         <div class="resumen">
             <h3> Resumen de compra </h3>
-        </div>
-        <!-- Carrito -->
-        <div class="carrito">
-            <div class="header-carrito">
-                <h2> Tu carrito</h2>
-            </div>
-            <div class="carrito-items">
-                <div class="carrito-item">
-                    <img src="{% static 'img/destornillador_bosch.jpg' %}" alt="" width="80px">
-                    <div class="carrito-item-detalles">
-                        <span class="carrito-item-titulo"> Destornillador Bosch</span>
-                        <div class="selector-cantidad">
-                            <i class="fa-solid fa-minus restar-cantidad"></i>
-                            <input type="text" value="1" class="carrito-item-cantidad" disabled>
-                            <i class="fa-solid fa-plus sumar-cantidad"></i>
-                            <i class="fa-solid fa-trash-can btn-eliminar"></i>
-                        </div>
-                        <span class="carrito-item-precio"> $15.000</span>
-                    </div>
-                </div>
-
-                <div class="carrito-item">
-                    <img src="{% static 'img/destornillador_makita.jpg' %}" alt="" width="80px">
-                    <div class="carrito-item-detalles">
-                        <span class="carrito-item-titulo"> Destornillador Makita</span>
-                        <div class="selector-cantidad">
-                            <i class="fa-solid fa-minus restar-cantidad"></i>
-                            <input type="text" value="1" class="carrito-item-cantidad" disabled>
-                            <i class="fa-solid fa-plus sumar-cantidad"></i>
-                            <i class="fa-solid fa-trash-can btn-eliminar"></i>
-                        </div>
-                        <span class="carrito-item-precio"> $20.000</span>
-                    </div>
-                        
-                </div>
-            </div>
-
             <div class="carrito-total">
                 <div class="fila">
                     <strong> Total </strong>
                     <span class="carrito-precio-total">
-                        $50.000
+                        {{ total_carrito }} USD
                     </span>
                 </div>
                 <button class="btn-pagar"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>
             </div>
         </div>
-
-
-
     </section>
 
 </body>

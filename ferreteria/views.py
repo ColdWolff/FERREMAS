@@ -160,7 +160,7 @@ def productoAdd(request):
     if request.method != "POST":
         categorias = Categoria.objects.all()
         marcas = Proveedor.objects.all()
-        context={'categorias':categorias, 'marcas':marcas}
+        context = {'categorias': categorias, 'marcas': marcas}
         return render(request, 'add_prod.html', context)
     else:
         marca = request.POST["marca"]
@@ -170,21 +170,41 @@ def productoAdd(request):
         precio_prod = request.POST["precio_prod"]
         id_categoria = request.POST["id_categoria"]
 
-        objCategoria = Categoria.objects.get(id_categoria = id_categoria)
-        objMarca = Proveedor.objects.get(id_proveedor = marca)
+        objCategoria = Categoria.objects.get(id_categoria=id_categoria)
+        objMarca = Proveedor.objects.get(id_proveedor=marca)
         objMarca = objMarca.nom_prov
-        obj= Producto.objects.create(   marca = objMarca,
-                                        codigo_prod = codigo_prod,
-                                        nombre_prod = nombre_prod,
-                                        desc_prod = desc_prod,
-                                        precio_prod = precio_prod,
-                                        id_categoria= objCategoria)
+        
+        try:
+            precio_prod = float(precio_prod)
+        except ValueError:
+            categorias = Categoria.objects.all()
+            marcas = Proveedor.objects.all()
+            productos = Producto.objects.all()
+            context = {
+                'categorias': categorias,
+                'marcas': marcas,
+                'productos': productos,
+                'mensaje': "Error: El precio ingresado no es válido. Por favor, ingrese un número decimal."
+            }
+            return render(request, 'add_prod.html', context)
+
+        obj = Producto.objects.create(marca=objMarca,
+                                      codigo_prod=codigo_prod,
+                                      nombre_prod=nombre_prod,
+                                      desc_prod=desc_prod,
+                                      precio_prod=precio_prod,
+                                      id_categoria=objCategoria)
         obj.save()
-        categorias= Categoria.objects.all()
+        categorias = Categoria.objects.all()
         marcas = Proveedor.objects.all()
         productos = Producto.objects.all()
-        context= {'categorias':categorias, 'marcas':marcas, 'productos':productos,'mensaje':"Producto Registrado...",}
-    return render(request, 'add_prod.html', context)
+        context = {
+            'categorias': categorias,
+            'marcas': marcas,
+            'productos': productos,
+            'mensaje': "Producto Registrado..."
+        }
+        return render(request, 'add_prod.html', context)
 
 #R
 def productoRead(request,pk):
@@ -211,15 +231,33 @@ def productoUpdate(request):
         precio_prod = request.POST["precio_prod"]
         id_categoria = request.POST["id_categoria"]
 
-        objCategoria = Categoria.objects.get(id_categoria = id_categoria)
-        objMarca = Proveedor.objects.get(id_proveedor = marca)
+        objCategoria = Categoria.objects.get(id_categoria=id_categoria)
+        objMarca = Proveedor.objects.get(id_proveedor=marca)
         objMarca = objMarca.nom_prov
 
-        producto = Producto.objects.get(id_producto = id_producto)
+        producto = Producto.objects.get(id_producto=id_producto)
         producto.marca = objMarca
         producto.codigo_prod = codigo_prod
         producto.nombre_prod = nombre_prod
         producto.desc_prod = desc_prod
+        
+        try:
+            precio_prod = float(precio_prod)
+        except ValueError:
+            productos = Producto.objects.all()
+            categorias = Categoria.objects.all()
+            marcas = Proveedor.objects.all()
+            stocks = Stock.objects.all()
+            context = {
+                'mensaje': "Error: El precio ingresado no es válido. Por favor, ingrese un número decimal.",
+                'productos': productos,
+                'categorias': categorias,
+                'marcas': marcas,
+                'producto': producto,
+                'stocks':stocks
+            }
+            return render(request, 'list_prod.html', context)
+        
         producto.precio_prod = precio_prod
         producto.id_categoria = objCategoria
         producto.save()
@@ -227,12 +265,20 @@ def productoUpdate(request):
         productos = Producto.objects.all()
         categorias = Categoria.objects.all()
         marcas = Proveedor.objects.all()
-        context={'mensaje':"Ok, datos actualizados...",'productos': productos,'categorias': categorias, 'marcas': marcas, 'producto': producto}
-        return render(request, 'list_prod.html',context)
+        stocks = Stock.objects.all()
+        context = {
+            'mensaje': "Ok, datos actualizados...",
+            'productos': productos,
+            'categorias': categorias,
+            'marcas': marcas,
+            'producto': producto,
+            'stocks':stocks
+        }
+        return render(request, 'list_prod.html', context)
     else:
         productos = Producto.objects.all()
-        context={'productos': productos}
-        return render(request, 'list_prod.html',context)  
+        context = {'productos': productos,'stocks':stocks}
+        return render(request, 'list_prod.html', context)  
 
 #D   
 def productoDel(request, pk):
@@ -335,10 +381,9 @@ def stockList(request):
     return render(request,"list_stock.html",context)
 
 def index(request):
-    return render(
-        request,
-        "index.html",
-    )
+    productos = Producto.objects.all()
+    context={'productos': productos}
+    return render(request,"index.html",context)
 
 def login(request):
     return render(
