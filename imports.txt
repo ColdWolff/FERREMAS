@@ -1,0 +1,7 @@
+# [SOLO SI ES NECESARIO] pip install transbank-sdk
+# [SOLO SI ES NECESARIO] pip install mysqlclient
+# [SOLO SI ES NECESARIO] pip install pymysql
+# [SOLO SI ES NECESARIO] pip install gunicorn
+# [SOLO SI ES NECESARIO] pip install whitenoise
+# py manage.py makemigrations
+# py manage.py migrate

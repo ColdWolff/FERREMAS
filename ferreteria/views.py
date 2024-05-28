@@ -2,7 +2,9 @@ from datetime import datetime, timedelta
 import json
 from .models import Producto, Categoria, Stock, Proveedor
 from urllib.request import urlopen
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.conf import settings
+from transbank.webpay.webpay_plus.transaction import Transaction
 
 money_type = [
     ["USD", "Dólar", "Dolares"],
@@ -11,7 +13,6 @@ money_type = [
     ["JPY", "Yen", "Yenes"],
     ["GBP", "Libra", "Libras"],
 ]
-
 
 def fecha_de_hoy():
     fecha_actual = datetime.now()
@@ -333,6 +334,24 @@ def stockList(request):
     stocks = Stock.objects.all()
     context={'stocks': stocks}
     return render(request,"list_stock.html",context)
+
+def iniciar_compra(request):
+    if request.method == 'POST':
+        transaction = Transaction()
+        response = transaction.create(
+            buy_order="orden12345", 
+            session_id="sesion12345", 
+            amount=10000, 
+            return_url="http://localhost:8000/compra/completada/"
+        )
+        return render(request, 'compra/iniciar_compra.html', {'url': response['url'], 'token': response['token']})
+    return render(request, 'compra/iniciar_compra.html')
+
+def compra_completada(request):
+    token = request.GET.get('token_ws')
+    transaction = Transaction()
+    response = transaction.commit(token)
+    return render(request, 'compra/completada.html', {'response': response})
 
 def index(request):
     return render(

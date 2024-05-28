@@ -28,5 +28,9 @@ urlpatterns = [
     path('update_stock', views.stockUpdate, name='update_stock'),
     path('delete_stock/<str:pk>', views.stockDel, name='delete_stock'),
     path('list_stock', views.stockList, name='list_stock'),
+
+    # TRANSBANK
+    path('compra/iniciar/', views.iniciar_compra, name='iniciar_compra'),
+    path('compra/completada/', views.compra_completada, name='compra_completada'),
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 
