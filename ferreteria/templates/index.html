@@ -1,6 +1,7 @@
 {% extends 'hnf.html' %}
 {% load static %}
 {% block content %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,90 +18,26 @@
     <section class="contenedor">
         <!-- Container Items Exposicion -->
         <div class="contenedor-items">
+            {% for producto in productos %}
             <div class="item">
-                <span class="titulo-item">
-                    Destornillador Bosch
+                <span hidden class="titulo-item" name="id_producto">
+                    {{ producto.id_producto }}
                 </span>
-                <img src="{% static 'img/destornillador_bosch.jpg' %}" alt="" class="img-item">
-                <span class="precio-item"> $15.000</span>
+                <span class="titulo-item" name="nombre_prod">
+                    {{ producto.nombre_prod }}
+                </span>
+                <span class="precio-item" name="precio_prod">{{ producto.precio_prod }}  USD</span>
                 <button class="boton-item"> Agregar al carrito </button>
             </div>
-
-            <div class="item">
-                <span class="titulo-item">
-                    Destornillador Makita
-                </span>
-                <img src="{% static 'img/destornillador_makita.jpg' %}" alt="" class="img-item">
-                <span class="precio-item"> $10.000</span>
-                <button class="boton-item"> Agregar al carrito </button>
-            </div>
-
-            <div class="item">
-                <span class="titulo-item">
-                    Destornillador Stanley
-                </span>
-                <img src="{% static 'img/destornillador_stanley.jpg' %}" alt="" class="img-item">
-                <span class="precio-item"> $15.000</span>
-                <button class="boton-item"> Agregar al carrito </button>
-            </div>
-
-            <div class="item">
-                <span class="titulo-item">
-                    Casco Bosch
-                </span>
-                <img src="{% static 'img/casco_bosch.jpg' %}" alt="" class="img-item">
-                <span class="precio-item"> $25.000</span>
-                <button class="boton-item"> Agregar al carrito </button>
-            </div>
+            {% endfor %}
         </div>
         <!-- Carrito -->
         <div class="carrito">
-            <div class="header-carrito">
-                <h2> Tu carrito</h2>
-            </div>
-            <div class="carrito-items">
-                <div class="carrito-item">
-                    <img src="{% static 'img/destornillador_bosch.jpg' %}" alt="" width="80px">
-                    <div class="carrito-item-detalles">
-                        <span class="carrito-item-titulo"> Destornillador Bosch</span>
-                        <div class="selector-cantidad">
-                            <i class="fa-solid fa-minus restar-cantidad"></i>
-                            <input type="text" value="1" class="carrito-item-cantidad" disabled>
-                            <i class="fa-solid fa-plus sumar-cantidad"></i>
-                        </div>
-                        <span class="carrito-item-precio"> $15.000</span>
-                    </div>
-                    <span><i class="fa-solid fa-trash-can btn-eliminar"></i></span>
-                </div>
-
-                <div class="carrito-item">
-                    <img src="{% static 'img/destornillador_makita.jpg' %}" alt="" width="80px">
-                    <div class="carrito-item-detalles">
-                        <span class="carrito-item-titulo"> Destornillador Makita</span>
-                        <div class="selector-cantidad">
-                            <i class="fa-solid fa-minus restar-cantidad"></i>
-                            <input type="text" value="1" class="carrito-item-cantidad" disabled>
-                            <i class="fa-solid fa-plus sumar-cantidad"></i>
-                        </div>
-                        <span class="carrito-item-precio"> $20.000</span>
-                    </div>
-                    <span><i class="fa-solid fa-trash-can btn-eliminar"></i></span>
-                </div>
-            </div>
-
             <div class="carrito-total">
-                <div class="fila">
-                    <strong> Total </strong>
-                    <span class="carrito-precio-total">
-                        $50.000
-                    </span>
-                </div>
-                <a class="btn-pagar" style="text-decoration: none;" href="/carrito"> Ir a resumen <i class="fa-solid fa-bag-shopping"></i></a>
+                <a class="btn-pagar" style="text-decoration: none;" href="/carrito"> Ir a resumen <i
+                        class="fa-solid fa-bag-shopping"></i></a>
             </div>
         </div>
-
-
-
     </section>
 
 </body>
