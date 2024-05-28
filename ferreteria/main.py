@@ -4,7 +4,10 @@ from config import mysql
 from flask import jsonify
 from flask import flash, request
 from django.shortcuts import render
+from transbank.webpay.webpay_plus.transaction import Transaction
 
+CommerceCode = '597055555532'
+ApiKeySecret = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
 
 #C
 @app.route('/create/<name>/<email>/<int:phone>/<address>', methods=['POST'])
