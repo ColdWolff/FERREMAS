@@ -3,11 +3,83 @@ from app import app
 from config import mysql
 from flask import jsonify
 from flask import flash, request
+from flask import Flask, request
+from flask_cors import CORS
+import requests
 from django.shortcuts import render
 from transbank.webpay.webpay_plus.transaction import Transaction
 
-CommerceCode = '597055555532'
-ApiKeySecret = '579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C'
+app = Flask(__name__)
+CORS(app)
+cors = CORS(app, resource = {
+     r"/api/v1/transbank/*":{
+          "origins" : "*"
+     }
+})
+
+def header_request_transbank():
+    headers = { 
+                "Authorization": "Token",
+                "Tbk-Api-Key-Id": "597055555532",
+                "Tbk-Api-Key-Secret": "579B532A7440BB0C9079DED94D31EA1615BACEB56610332264630D42D0A36B1C",
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                'Referrer-Policy': 'origin-when-cross-origin',
+                } 
+    return headers   
+
+# DEFINICIÓN DE RUTA API REST, PERMITIENDO SOLO SER LLAMADO POR POST
+@app.route('/api/v1/transbank/transaction/create', methods=['POST'])
+def transbank_create():
+    # LECTURA DE PAYLOAD (BODY) CON INFORMACIÓN DE TIPO JSON
+    print('headers: ', request.headers)
+    data = request.json
+    print('data: ', data)
+    # DEFINICIÓN DE URL DE TRANSBANK PARA CREAR UNA TRANSACCIÓN
+    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions"
+    # CABECERA SOLICITADA POR TRANSBANK
+    headers = header_request_transbank()
+    # INVOCACIÓN POR POST A API REST QUE CREA UNA TRANSACCIÓN EN TRANSBANK
+    response = requests.post(url, json = data, headers=headers)
+    print('response: ', response.json())
+    # RETORNO DE LA RESPUESTA DE TRANSBANK
+    return response.json()
+
+# DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR GET
+@app.route('/api/v1/transbank/transaction/commit/<string:tokenws>', methods=['PUT'])
+def transbank_commit(tokenws):
+    print('tokenws: ', tokenws)
+    # DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
+    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}".format(tokenws)
+    # CABECERA SOLICITADA POR TRANSBANK
+    headers = header_request_transbank()
+    # INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK    
+    response = requests.put(url, headers=headers)
+    print('response: ', response.json())
+    # RETORNO DE LA RESPUESTA DE TRANSBANK
+    return response.json()
+
+# DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws, amount) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR POST
+@app.route('/api/v1/transbank/transaction/reverse-or-cancel/<string:tokenws>', methods=['POST'])
+def transbank_reverse_or_cancel(tokenws):
+    print('tokenws: ', tokenws)
+    # LECTURA DE PAYLOAD (BODY) CON INFORMACIÓN DE TIPO JSON
+    data = request.json
+    print('data: ', data)
+    # DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
+    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}/refunds".format(tokenws)
+    # CABECERA SOLICITADA POR TRANSBANK
+    headers = header_request_transbank()
+    # INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK    
+    response = requests.post(url, json = data, headers=headers)
+    print('response: ', response.json())
+    # RETORNO DE LA RESPUESTA DE TRANSBANK
+    return response.json()       
+ 
+# DESPLIEGUE SERVICIO PROPIO DE FLASK (SOLO PARA PRUEBAS). EN DONDE AL DEFINI 0.0.0.0 SE 
+# HABILITA EL USO DE LA IP LOCAL, IP DE RED, ETC. PARA EL PUERTO 8900
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8900, debug=True)
 
 #C
 @app.route('/create/<name>/<email>/<int:phone>/<address>', methods=['POST'])
