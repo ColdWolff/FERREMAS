@@ -1,8 +1,13 @@
 from datetime import datetime, timedelta
 import json
+import random
 from .models import Producto, Categoria, Stock, Proveedor
 from urllib.request import urlopen
 from django.shortcuts import render
+from django.http import HttpRequest, HttpResponse
+from django.conf import settings
+from transbank.error.transbank_error import TransbankError
+from transbank.webpay.webpay_plus.transaction import Transaction
 
 money_type = [
     ["USD", "Dólar", "Dolares"],
@@ -11,7 +16,6 @@ money_type = [
     ["JPY", "Yen", "Yenes"],
     ["GBP", "Libra", "Libras"],
 ]
-
 
 def fecha_de_hoy():
     fecha_actual = datetime.now()
@@ -380,6 +384,55 @@ def stockList(request):
     context={'stocks': stocks}
     return render(request,"list_stock.html",context)
 
+#TRANSBANK
+def webpay_plus_create(request: HttpRequest) -> HttpResponse:
+    buy_order = str(random.randrange(1000000, 99999999))
+    session_id = str(random.randrange(1000000, 99999999))
+    amount = random.randrange(10000, 1000000)
+    return_url = request.build_absolute_uri('/webpay/plus/commit/')
+
+    create_request = {
+        "buy_order": buy_order,
+        "session_id": session_id,
+        "amount": amount,
+        "return_url": return_url
+    }
+    
+    response = Transaction().create(buy_order, session_id, amount, return_url)
+    return render(request, 'webpay/plus/create.html', {'request': create_request, 'response': response})
+
+def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
+    token = request.GET.get("token_ws")
+    response = Transaction().commit(token=token)
+    return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
+
+def webpay_plus_commit_error(request: HttpRequest) -> HttpResponse:
+    token = request.POST.get("token_ws")
+    response = {"error": "Transacción con errores"}
+    return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
+
+def webpay_plus_refund(request: HttpRequest) -> HttpResponse:
+    token = request.POST.get("token_ws")
+    amount = request.POST.get("amount")
+    try:
+        response = Transaction().refund(token, amount)
+        return render(request, "webpay/plus/refund.html", {'token': token, 'amount': amount, 'response': response})
+    except TransbankError as e:
+        return HttpResponse(e.message)
+
+def webpay_plus_refund_form(request: HttpRequest) -> HttpResponse:
+    return render(request, "webpay/plus/refund-form.html")
+
+def status_form(request: HttpRequest) -> HttpResponse:
+    return render(request, 'webpay/plus/status-form.html')
+
+def status(request: HttpRequest) -> HttpResponse:
+    token_ws = request.POST.get('token_ws')
+    response = Transaction().status(token_ws)
+    return render(request, 'webpay/plus/status.html', {'response': response, 'token': token_ws, 'req': request.POST})
+
+
+#PAGINAS
 def index(request):
     productos = Producto.objects.all()
     context={'productos': productos}

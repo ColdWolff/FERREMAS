@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Status Form</title>
+</head>
+<body>
+    <h1>Transaction Status</h1>
+    <form action="{% url 'status' %}" method="post">
+        {% csrf_token %}
+        <label for="token_ws">Token:</label>
+        <input type="text" id="token_ws" name="token_ws">
+        <button type="submit">Check Status</button>
+    </form>
+</body>
+</html>
