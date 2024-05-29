@@ -37,6 +37,10 @@ urlpatterns = [
     path('webpay/plus/refund-form/', views.webpay_plus_refund_form, name='webpay_plus_refund_form'),
     path('webpay/plus/status-form/', views.status_form, name='status_form'),
     path('webpay/plus/status/', views.status, name='status'),
+
+    # CARRITO
+    path('agregar/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('carrito', views.carrito_detalle, name='carrito_detalle'),
     
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 

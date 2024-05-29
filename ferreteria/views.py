@@ -3,7 +3,7 @@ import json
 import random
 from .models import Producto, Categoria, Stock, Proveedor
 from urllib.request import urlopen
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.conf import settings
 from transbank.error.transbank_error import TransbankError
@@ -386,20 +386,31 @@ def stockList(request):
 
 #TRANSBANK
 def webpay_plus_create(request: HttpRequest) -> HttpResponse:
-    buy_order = str(random.randrange(1000000, 99999999))
-    session_id = str(random.randrange(1000000, 99999999))
-    amount = random.randrange(10000, 1000000)
-    return_url = request.build_absolute_uri('/webpay/plus/commit/')
+    if request.method == "POST":
+        amount = request.POST.get('amount')
+        if not amount:
+            return HttpResponse("Amount is required", status=400)
+        
+        try:
+            amount = int(amount)
+        except ValueError:
+            return HttpResponse("Invalid amount", status=400)
+        
+        buy_order = str(random.randrange(1000000, 99999999))
+        session_id = str(random.randrange(1000000, 99999999))
+        return_url = request.build_absolute_uri('/webpay/plus/commit/')
 
-    create_request = {
-        "buy_order": buy_order,
-        "session_id": session_id,
-        "amount": amount,
-        "return_url": return_url
-    }
+        create_request = {
+            "buy_order": buy_order,
+            "session_id": session_id,
+            "amount": amount,
+            "return_url": return_url
+        }
+        
+        response = Transaction().create(buy_order, session_id, amount, return_url)
+        return render(request, 'webpay/plus/create.html', {'request': create_request, 'response': response})
     
-    response = Transaction().create(buy_order, session_id, amount, return_url)
-    return render(request, 'webpay/plus/create.html', {'request': create_request, 'response': response})
+    return render(request, 'webpay/plus/create.html')
 
 def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
     token = request.GET.get("token_ws")
@@ -431,6 +442,38 @@ def status(request: HttpRequest) -> HttpResponse:
     response = Transaction().status(token_ws)
     return render(request, 'webpay/plus/status.html', {'response': response, 'token': token_ws, 'req': request.POST})
 
+#CARRITO
+def agregar_al_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, id_producto=producto_id)
+    carrito = request.session.get('carrito', {})
+    
+    print("Producto ID:", producto_id)
+    print("Producto Nombre:", producto.nombre_prod)
+    
+    if producto_id in carrito:
+        carrito[producto_id]['cantidad'] += 1
+    else:
+        carrito[producto_id] = {
+            'nombre': producto.nombre_prod,
+            'precio': producto.precio_prod,
+            'cantidad': 1,
+        }
+
+    print("Carrito después de agregar:", carrito)
+    
+    request.session['carrito'] = carrito
+    return redirect('carrito_detalle')
+
+def carrito_detalle(request):
+    carrito = request.session.get('carrito', {})
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    print("Carrito en detalle:", carrito)
+    
+    total_precio = sum(item['precio'] * item['cantidad'] for item in carrito.values())
+    for item in carrito.values():
+        item['subtotal'] = item['precio'] * item['cantidad']
+    
+    return render(request, 'carrito.html', {'carrito': carrito, 'total_precio': total_precio})
 
 #PAGINAS
 def index(request):

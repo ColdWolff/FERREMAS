@@ -20,14 +20,17 @@
         <div class="contenedor-items">
             {% for producto in productos %}
             <div class="item">
-                <span hidden class="titulo-item" name="id_producto">
-                    {{ producto.id_producto }}
-                </span>
-                <span class="titulo-item" name="nombre_prod">
-                    {{ producto.nombre_prod }}
-                </span>
-                <span class="precio-item" name="precio_prod">{{ producto.precio_prod }}  USD</span>
-                <button class="boton-item"> Agregar al carrito </button>
+                <form method="post" action="{% url 'agregar_al_carrito' producto.id_producto %}">
+                    {% csrf_token %}
+                    <span hidden class="titulo-item" name="id_producto">
+                        {{ producto.id_producto }}
+                    </span>
+                    <span class="titulo-item" name="nombre_prod">
+                        {{ producto.nombre_prod }}
+                    </span>
+                    <span class="precio-item" name="precio_prod">{{ producto.precio_prod }} USD</span>
+                    <button type="submit" class="boton-item">Agregar al carrito</button>
+                </form>
             </div>
             {% endfor %}
         </div>
