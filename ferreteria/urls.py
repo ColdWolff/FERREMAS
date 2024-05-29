@@ -30,7 +30,13 @@ urlpatterns = [
     path('list_stock', views.stockList, name='list_stock'),
 
     # TRANSBANK
-    path('compra/iniciar/', views.iniciar_compra, name='iniciar_compra'),
-    path('compra/completada/', views.compra_completada, name='compra_completada'),
+    path('webpay/plus/create/', views.webpay_plus_create, name='webpay_plus_create'),
+    path('webpay/plus/commit/', views.webpay_plus_commit, name='webpay_plus_commit'),
+    path('webpay/plus/commit-error/', views.webpay_plus_commit_error, name='webpay_plus_commit_error'),
+    path('webpay/plus/refund/', views.webpay_plus_refund, name='webpay_plus_refund'),
+    path('webpay/plus/refund-form/', views.webpay_plus_refund_form, name='webpay_plus_refund_form'),
+    path('webpay/plus/status-form/', views.status_form, name='status_form'),
+    path('webpay/plus/status/', views.status, name='status'),
+    
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Webpay Plus Create</title>
+</head>
+<body>
+    <h1>Create Transaction</h1>
+    <form action="{{ response.url }}" method="post">
+        <input type="hidden" name="token_ws" value="{{ response.token }}">
+        <button type="submit">Pagar</button>
+    </form>
+</body>
+</html>

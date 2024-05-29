@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Refund Form</title>
+</head>
+<body>
+    <h1>Refund Transaction</h1>
+    <form action="{% url 'webpay_plus_refund' %}" method="post">
+        {% csrf_token %}
+        <label for="token_ws">Token:</label>
+        <input type="text" id="token_ws" name="token_ws">
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount">
+        <button type="submit">Refund</button>
+    </form>
+</body>
+</html>
