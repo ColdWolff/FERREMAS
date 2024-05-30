@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ingresar Monto</title>
+</head>
+<body>
+    <h1>Ingresar Monto</h1>
+    <form action="{% url 'webpay_plus_create' %}" method="post">
+        {% csrf_token %}
+        <label for="amount">Monto:</label>
+        <input type="text" id="amount" name="amount">
+        <button type="submit">Pagar</button>
+    </form>
+</body>
+</html>

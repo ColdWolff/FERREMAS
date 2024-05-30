@@ -386,15 +386,16 @@ def stockList(request):
 
 #TRANSBANK
 def webpay_plus_create(request: HttpRequest) -> HttpResponse:
-    if request.method == "POST":
+    if request.method == 'POST':
         amount = request.POST.get('amount')
-        if not amount:
-            return HttpResponse("Amount is required", status=400)
+        
+        if amount is None:
+            return HttpResponse("Monto no especificado", status=400)
         
         try:
             amount = int(amount)
         except ValueError:
-            return HttpResponse("Invalid amount", status=400)
+            return HttpResponse("Monto inválido", status=400)
         
         buy_order = str(random.randrange(1000000, 99999999))
         session_id = str(random.randrange(1000000, 99999999))
@@ -406,11 +407,18 @@ def webpay_plus_create(request: HttpRequest) -> HttpResponse:
             "amount": amount,
             "return_url": return_url
         }
+
+        try:
+            response = Transaction().create(buy_order, session_id, amount, return_url)
+        except Exception as e:
+            return HttpResponse(f"Error al crear la transacción: {str(e)}", status=500)
         
-        response = Transaction().create(buy_order, session_id, amount, return_url)
-        return render(request, 'webpay/plus/create.html', {'request': create_request, 'response': response})
-    
-    return render(request, 'webpay/plus/create.html')
+        return render(request, 'webpay/plus/create.html', {'response': response})
+    else:
+        return HttpResponse("Método no permitido", status=405)
+
+def webpay_plus_amount_form(request: HttpRequest) -> HttpResponse:
+    return render(request, 'webpay/plus/amount-form.html')
 
 def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
     token = request.GET.get("token_ws")
