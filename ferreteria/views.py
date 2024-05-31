@@ -400,28 +400,22 @@ def webpay_plus_create(request: HttpRequest) -> HttpResponse:
         buy_order = str(random.randrange(1000000, 99999999))
         session_id = str(random.randrange(1000000, 99999999))
         return_url = request.build_absolute_uri('/webpay/plus/commit/')
-
-        create_request = {
-            "buy_order": buy_order,
-            "session_id": session_id,
-            "amount": amount,
-            "return_url": return_url
-        }
-
         try:
-            response = Transaction().create(buy_order, session_id, amount, return_url)
+            data = Transaction().create(buy_order, session_id, amount, return_url)
+            return redirect(data['url'] + '?token_ws=' + data['token'])
         except Exception as e:
-            return HttpResponse(f"Error al crear la transacción: {str(e)}", status=500)
-        
-        return render(request, 'webpay/plus/create.html', {'response': response})
+            print("a")
+            return HttpResponse(f"Error al crear la transacción: {str(e)}", status=500)  
     else:
-        return HttpResponse("Método no permitido", status=405)
+        return render(request, 'webpay/plus/amount-form.html')
 
-def webpay_plus_amount_form(request: HttpRequest) -> HttpResponse:
-    return render(request, 'webpay/plus/amount-form.html')
 
 def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
-    token = request.GET.get("token_ws")
+    data = webpay_plus_create(request)
+    url = request.args.get("url")
+    print(url)
+    token = request.args.get("token_ws")
+    print(token)
     response = Transaction().commit(token=token)
     return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
 
