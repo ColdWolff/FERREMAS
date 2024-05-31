@@ -30,7 +30,7 @@ urlpatterns = [
     path('list_stock', views.stockList, name='list_stock'),
 
     # TRANSBANK
-    #path('webpay/plus/amount-form/', views.webpay_plus_amount_form, name='webpay_plus_amount_form'),
+    path('webpay/plus/amount-form/', views.webpay_plus_amount_form, name='webpay_plus_amount_form'),
     path('webpay/plus/create/', views.webpay_plus_create, name='webpay_plus_create'),
     path('webpay/plus/commit/', views.webpay_plus_commit, name='webpay_plus_commit'),
     path('webpay/plus/commit-error/', views.webpay_plus_commit_error, name='webpay_plus_commit_error'),

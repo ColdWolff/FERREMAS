@@ -407,7 +407,8 @@ def webpay_plus_create(request: HttpRequest) -> HttpResponse:
             print("a")
             return HttpResponse(f"Error al crear la transacción: {str(e)}", status=500)  
     else:
-        return render(request, 'webpay/plus/amount-form.html')
+        response = Transaction().commit(token=token)
+        return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
 
 
 def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
@@ -419,6 +420,8 @@ def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
     response = Transaction().commit(token=token)
     return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
 
+def webpay_plus_amount_form(request: HttpRequest) -> HttpResponse:
+    return render(request, 'webpay/plus/amount-form.html')
 def webpay_plus_commit_error(request: HttpRequest) -> HttpResponse:
     token = request.POST.get("token_ws")
     response = {"error": "Transacción con errores"}
