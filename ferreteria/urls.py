@@ -31,8 +31,8 @@ urlpatterns = [
 
     # TRANSBANK
     path('webpay/plus/amount-form/', views.webpay_plus_amount_form, name='webpay_plus_amount_form'),
-    path('webpay/plus/create/', views.webpay_plus_create, name='webpay_plus_create'),
-    path('webpay/plus/commit/', views.webpay_plus_commit, name='webpay_plus_commit'),
+    #path('webpay/plus/create/', views.webpay_plus_create, name='webpay_plus_create'),
+    path('webpay/plus/commit/', views.webpay_plus_create, name='webpay_plus_commit'),
     path('webpay/plus/commit-error/', views.webpay_plus_commit_error, name='webpay_plus_commit_error'),
     path('webpay/plus/refund/', views.webpay_plus_refund, name='webpay_plus_refund'),
     path('webpay/plus/refund-form/', views.webpay_plus_refund_form, name='webpay_plus_refund_form'),

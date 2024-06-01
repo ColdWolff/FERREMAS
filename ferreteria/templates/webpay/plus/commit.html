@@ -16,13 +16,18 @@
 
 <body>
     <section>
-
+        <div class="container">
+            <div style="margin-bottom: 10px;">
+                <a style="text-decoration: none;color: black;" href="/../../../">
+                    <i style="color: black;" class="fa-solid fa-arrow-left"></i> Volver
+                </a>
+            </div>
         <div class="container">
             
-            <a href="/../../">volver</a>
-            <h1>Commit Transaction</h1>
-            <p>Token: {{ token }}</p>
-            <p>Response: {{ response }}</p>
+            <h1>Resultado de la transaccion</h1>
+            <h5>Su pago fue: {{ status }}</h5>
+            <h6>Monto pagado: ${{ amount }}</h6>
+            <h6>Tarjeta Utilizada: **** **** **** {{ card }}</h6>
         </div>
     </section>
 </body>

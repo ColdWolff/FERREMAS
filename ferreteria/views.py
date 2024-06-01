@@ -400,28 +400,41 @@ def webpay_plus_create(request: HttpRequest) -> HttpResponse:
         buy_order = str(random.randrange(1000000, 99999999))
         session_id = str(random.randrange(1000000, 99999999))
         return_url = request.build_absolute_uri('/webpay/plus/commit/')
-        try:
-            data = Transaction().create(buy_order, session_id, amount, return_url)
-            return redirect(data['url'] + '?token_ws=' + data['token'])
-        except Exception as e:
-            print("a")
-            return HttpResponse(f"Error al crear la transacción: {str(e)}", status=500)  
+
+        data = Transaction().create(buy_order, session_id, amount, return_url)
+        return redirect(data['url'] + '?token_ws=' + data['token'])  
     else:
-        response = Transaction().commit(token=token)
-        return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
-
-
-def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
-    data = webpay_plus_create(request)
-    url = request.args.get("url")
-    print(url)
-    token = request.args.get("token_ws")
-    print(token)
-    response = Transaction().commit(token=token)
-    return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
+        token = get_token_from_request(request)
+        if token:
+            response = Transaction().commit(token=token)
+            amount = response['amount']
+            card = response.get('card_detail', {}).get('card_number')
+            if response['status'] == "AUTHORIZED":
+                status = "Aprobado"
+            else:
+                status = "Rechazado"
+            return render(request, 'webpay/plus/commit.html', {'response': response,'status': status,'amount': amount,'card': card})
+        else:
+            return HttpResponse("Token no encontrado en la solicitud.", status=400)
 
 def webpay_plus_amount_form(request: HttpRequest) -> HttpResponse:
     return render(request, 'webpay/plus/amount-form.html')
+
+def get_token_from_request(request: HttpRequest) -> str:
+    token = None
+    if request.method == 'GET':
+        url = request.get_full_path()
+        parts = url.split('?')
+        if len(parts) == 2:
+            params = parts[1]
+            params = params.split('&')
+            for param in params:
+                key, value = param.split('=')
+                if key == 'token_ws':
+                    token = value
+                    break
+    return token
+
 def webpay_plus_commit_error(request: HttpRequest) -> HttpResponse:
     token = request.POST.get("token_ws")
     response = {"error": "Transacción con errores"}
