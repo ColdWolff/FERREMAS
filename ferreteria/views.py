@@ -3,7 +3,7 @@ import json
 import random
 from .models import Producto, Categoria, Stock, Proveedor
 from urllib.request import urlopen
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.conf import settings
 from transbank.error.transbank_error import TransbankError
@@ -386,25 +386,54 @@ def stockList(request):
 
 #TRANSBANK
 def webpay_plus_create(request: HttpRequest) -> HttpResponse:
-    buy_order = str(random.randrange(1000000, 99999999))
-    session_id = str(random.randrange(1000000, 99999999))
-    amount = random.randrange(10000, 1000000)
-    return_url = request.build_absolute_uri('/webpay/plus/commit/')
+    if request.method == 'POST':
+        amount = request.POST.get('amount')
+        
+        if amount is None:
+            return HttpResponse("Monto no especificado", status=400)
+        
+        try:
+            amount = int(amount)
+        except ValueError:
+            return HttpResponse("Monto inválido", status=400)
+        
+        buy_order = str(random.randrange(1000000, 99999999))
+        session_id = str(random.randrange(1000000, 99999999))
+        return_url = request.build_absolute_uri('/webpay/plus/commit/')
 
-    create_request = {
-        "buy_order": buy_order,
-        "session_id": session_id,
-        "amount": amount,
-        "return_url": return_url
-    }
-    
-    response = Transaction().create(buy_order, session_id, amount, return_url)
-    return render(request, 'webpay/plus/create.html', {'request': create_request, 'response': response})
+        data = Transaction().create(buy_order, session_id, amount, return_url)
+        return redirect(data['url'] + '?token_ws=' + data['token'])  
+    else:
+        token = get_token_from_request(request)
+        if token:
+            response = Transaction().commit(token=token)
+            amount = response['amount']
+            card = response.get('card_detail', {}).get('card_number')
+            if response['status'] == "AUTHORIZED":
+                status = "Aprobado"
+            else:
+                status = "Rechazado"
+            return render(request, 'webpay/plus/commit.html', {'response': response,'status': status,'amount': amount,'card': card})
+        else:
+            return HttpResponse("Token no encontrado en la solicitud.", status=400)
 
-def webpay_plus_commit(request: HttpRequest) -> HttpResponse:
-    token = request.GET.get("token_ws")
-    response = Transaction().commit(token=token)
-    return render(request, 'webpay/plus/commit.html', {'token': token, 'response': response})
+def webpay_plus_amount_form(request: HttpRequest) -> HttpResponse:
+    return render(request, 'webpay/plus/amount-form.html')
+
+def get_token_from_request(request: HttpRequest) -> str:
+    token = None
+    if request.method == 'GET':
+        url = request.get_full_path()
+        parts = url.split('?')
+        if len(parts) == 2:
+            params = parts[1]
+            params = params.split('&')
+            for param in params:
+                key, value = param.split('=')
+                if key == 'token_ws':
+                    token = value
+                    break
+    return token
 
 def webpay_plus_commit_error(request: HttpRequest) -> HttpResponse:
     token = request.POST.get("token_ws")
@@ -431,6 +460,38 @@ def status(request: HttpRequest) -> HttpResponse:
     response = Transaction().status(token_ws)
     return render(request, 'webpay/plus/status.html', {'response': response, 'token': token_ws, 'req': request.POST})
 
+#CARRITO
+def agregar_al_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, id_producto=producto_id)
+    carrito = request.session.get('carrito', {})
+    
+    print("Producto ID:", producto_id)
+    print("Producto Nombre:", producto.nombre_prod)
+    
+    if producto_id in carrito:
+        carrito[producto_id]['cantidad'] += 1
+    else:
+        carrito[producto_id] = {
+            'nombre': producto.nombre_prod,
+            'precio': producto.precio_prod,
+            'cantidad': 1,
+        }
+
+    print("Carrito después de agregar:", carrito)
+    
+    request.session['carrito'] = carrito
+    return redirect('carrito_detalle')
+
+def carrito_detalle(request):
+    carrito = request.session.get('carrito', {})
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    print("Carrito en detalle:", carrito)
+    
+    total_precio = sum(item['precio'] * item['cantidad'] for item in carrito.values())
+    for item in carrito.values():
+        item['subtotal'] = item['precio'] * item['cantidad']
+    
+    return render(request, 'carrito.html', {'carrito': carrito, 'total_precio': total_precio})
 
 #PAGINAS
 def index(request):

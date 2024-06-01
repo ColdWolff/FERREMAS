@@ -18,28 +18,35 @@
     <section class="contenedor" style="justify-content: space-around;">
         <!-- Elementos del Carrito -->
         <div class="carrito-total">
-            <h3> Tu carrito </h3>
-            {% for item in carrito %}
-            <div class="item-carrito">
-                <div class="info-producto">
-                    <span class="nombre-producto">{{ item.producto.nombre_prod }}</span>
-                    <span class="precio-producto">{{ item.producto.precio_prod }} USD</span>
-                    <div class="selector-cantidad">
-                        <a href="" class="btn-aumentar">
-                            <i class="fa-solid fa-plus"></i>
-                        </a>
-                        <span class="cantidad">{{ item.cantidad }}</span>
-                        <a href="" class="btn-disminuir">
-                            <i class="fa-solid fa-minus"></i>
-                        </a>
+            <h3>Tu carrito</h3>
+            {% if carrito %}
+                {% for item in carrito.values %}
+                <div class="item-carrito">
+                    <div class="info-producto">
+                        <span class="nombre-producto">{{ item.nombre }}</span>
+                        <span class="precio-producto">{{ item.precio }} USD</span>
+                        <div class="selector-cantidad">
+                            <a href="" class="btn-aumentar">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>
+                            <span class="cantidad">{{ item.cantidad }}</span>
+                            <a href="" class="btn-disminuir">
+                                <i class="fa-solid fa-minus"></i>
+                            </a>
+                        </div>
                     </div>
+                    <span class="subtotal">{{ item.subtotal }} USD</span>
+                    <a href="" class="btn-eliminar">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
                 </div>
-                <span class="subtotal">{{ item.subtotal }} USD</span>
-                <a href="" class="btn-eliminar">
-                    <i class="fa-solid fa-trash-can"></i>
-                </a>
-            </div>
-            {% endfor %}
+                {% endfor %}
+                <div class="total">
+                    <span>Total: {{ total_precio }} USD</span>
+                </div>
+            {% else %}
+                <p>Tu carrito está vacío</p>
+            {% endif %}
         </div>
 
         <!-- Resumen -->
