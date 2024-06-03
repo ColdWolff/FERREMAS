@@ -10,7 +10,7 @@ table {
     border-collapse: collapse;
 }
 
-th, tr td {
+th, td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
@@ -212,6 +212,32 @@ header{
     cursor: pointer;
 }
 
+.cantidad-container {
+    display: flex;
+    justify-content: space-between; /* Alinear los elementos a los extremos */
+    align-items: center;
+    margin: 10px auto;
+}
+
+.contenedor-items .item input .cantidad {
+    width: 15px !important; /* Reducir el ancho del campo de entrada */
+    max-width: 20px !important; /* Establecer un tamaño máximo para el campo de entrada */
+    text-align: center !important;
+}
+
+.cantidad-btn {
+    border: none;
+    background: #FF8A41;
+    color: #ffeddc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cantidad-btn:hover {
+    background: #FFA566;
+}
 /* Carrito*/
 .carrito{
     border: 1px solid #666;
@@ -446,3 +472,9 @@ header{
         background:#ffa735;
         color: #ece6e6;
     }
+
+.resumen {
+    margin: auto; 
+    max-width: 600px;
+    text-align: center; 
+}

@@ -20,48 +20,36 @@
         <div class="carrito-total">
             <h3>Tu carrito</h3>
             {% if carrito %}
-                {% for item in carrito.values %}
-                <div class="item-carrito">
-                    <div class="info-producto">
-                        <span class="nombre-producto">{{ item.nombre }}</span>
-                        <span class="precio-producto">{{ item.precio }} USD</span>
-                        <div class="selector-cantidad">
-                            <a href="" class="btn-aumentar">
-                                <i class="fa-solid fa-plus"></i>
-                            </a>
-                            <span class="cantidad">{{ item.cantidad }}</span>
-                            <a href="" class="btn-disminuir">
-                                <i class="fa-solid fa-minus"></i>
-                            </a>
-                        </div>
-                    </div>
+            {% for item in carrito.values %}
+            <div class="item-carrito">
+                <div class="info-producto">
+                    <span class="nombre-producto">{{ item.nombre }}</span>
+                    <span class="precio-producto">{{ item.precio }} USD</span>
+                    <span class="cantidad">{{ item.cantidad }}</span>
                     <span class="subtotal">{{ item.subtotal }} USD</span>
-                    <a href="" class="btn-eliminar">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </a>
                 </div>
                 {% endfor %}
                 <div class="total">
                     <span>Total: {{ total_precio }} USD</span>
                 </div>
-            {% else %}
+                {% else %}
                 <p>Tu carrito está vacío</p>
-            {% endif %}
-        </div>
-
-        <!-- Resumen -->
-        <div class="resumen">
-            <h3> Resumen de compra </h3>
-            <div class="carrito-total">
-                <div class="fila">
-                    <strong> Total </strong>
-                    <span class="carrito-precio-total">
-                        {{ total_carrito }} USD
-                    </span>
-                </div>
-                <button class="btn-pagar"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>
+                {% endif %}
             </div>
-        </div>
+
+            <!-- Resumen -->
+            <div class="resumen">
+                <h3> Resumen de compra </h3>
+                <div class="carrito-total">
+                    <div class="fila">
+                        <strong> Total </strong>
+                        <span class="carrito-precio-total">
+                            {{ total_carrito }} CLP
+                        </span>
+                    </div>
+                    <button class="btn-pagar"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>
+                </div>
+            </div>
     </section>
 
 </body>
