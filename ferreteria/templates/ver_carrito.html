@@ -1,0 +1,16 @@
+<!-- templates/ver_carrito.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carrito de Compras</title>
+</head>
+<body>
+    <h2>Carrito de Compras</h2>
+    <ul>
+        {% for item in items %}
+            <li>{{ item.producto.nombre_prod }} - {{ item.cantidad }} - ${{ item.subtotal }}</li>
+        {% endfor %}
+    </ul>
+    <p>Total: ${{ total }}</p>
+</body>
+</html>

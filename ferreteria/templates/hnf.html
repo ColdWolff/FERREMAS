@@ -41,12 +41,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/webpay/plus/amount-form/"><b class="color_nav">Create</b></a>
                     </li>
-                    <li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <b class="color_nav"> Hola: Usuario </b>
-                        </a>
+                        {% if user.is_authenticated %}
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <b class="color_nav"> Hola: {{ user.username }} </b>
+                            </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#"><b>Perfil</b></a>
                                 <a class="dropdown-item" href="#"><b>1</b></a>
@@ -55,13 +55,14 @@
                                 <a class="dropdown-item" href="#"><b>4</b></a>
                             <a class="dropdown-item" href="#"><b> Cerrar Sesion</b></a>
                         </div>
-                    <li>
-                        <a class="btn-sign" href="/login"><b>Acceder</b></a>
-                    </li>
-                    <li><br></li>
-                    <li>
-                        <a style="margin-top: 5px;" class="btn-sign" href="/signup"><b>Registrarse</b></a>
-                    </li>
+                        {% else %}
+                        <li>
+                            <a class="btn-sign" href="/login"><b>Acceder</b></a>
+                        </li><br>
+                        <li>
+                            <a style="margin-top: 5px;" class="btn-sign" href="/signup"><b>Registrarse</b></a>
+                        </li>
+                        {% endif %}
                     </li>
                 </ul>
             </div>

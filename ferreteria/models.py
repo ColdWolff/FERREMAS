@@ -1,11 +1,5 @@
 from django.db import models
-
-# [SOLO SI ES NECESARIO] pip install mysqlclient
-# [SOLO SI ES NECESARIO] pip install pymysql
-# [SOLO SI ES NECESARIO] pip install gunicorn
-# [SOLO SI ES NECESARIO] pip install whitenoise
-# py manage.py makemigrations
-# py manage.py migrate
+from django.contrib.auth.models import User
 
 class Proveedor(models.Model):
     id_proveedor = models.AutoField(primary_key=True)
@@ -46,3 +40,13 @@ class Stock(models.Model):
     cantidad = models.IntegerField()
     id_producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
 
+class Carrito(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+class CarritoItem(models.Model):
+    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+
+    def subtotal(self):
+        return self.producto.precio_prod * self.cantidad
