@@ -29,6 +29,11 @@
                         {{ producto.nombre_prod }}
                     </span>
                     <span class="precio-item" name="precio_prod">{{ producto.precio_prod }} USD</span>
+                    <div class="cantidad-container">
+                        <button type="button" class="cantidad-btn disminuir">-</button>
+                        <input type="text" class="cantidad" name="cantidad" value="1" min="1">
+                        <button type="button" class="cantidad-btn incrementar">+</button>
+                    </div>
                     <button type="submit" class="boton-item">Agregar al carrito</button>
                 </form>
             </div>
@@ -44,7 +49,32 @@
     </section>
 
 </body>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const disminuirBtns = document.querySelectorAll(".disminuir");
+        const aumentarBtns = document.querySelectorAll(".incrementar");
+    
+        disminuirBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                const cantidadInput = btn.nextElementSibling;
+                let cantidad = parseInt(cantidadInput.value);
+                if (cantidad > 1) {
+                    cantidad--;
+                    cantidadInput.value = cantidad;
+                }
+            });
+        });
+    
+        aumentarBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+                const cantidadInput = btn.previousElementSibling; 
+                let cantidad = parseInt(cantidadInput.value);
+                cantidad++;
+                cantidadInput.value = cantidad;
+            });
+        });
+    });
+    </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

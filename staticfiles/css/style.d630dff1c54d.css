@@ -9,14 +9,25 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
+
 th, td {
     border: 1px solid black;
     padding: 8px;
-    text-align: left;
+    text-align: center;
 }
+
 
 button{
     margin-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    flex: 1;
 }
 
 /*Responsive*/
@@ -86,19 +97,6 @@ button{
 .form-control{
     align-items: center;
 }
-
-.btn{
-    padding-top: 5px;
-    text-align: center;
-    margin-right: 10px;
-    margin-left: 10px;
-    background: #000;
-    color: #fff;
-}
-    .btn:hover{
-        background:#fff;
-        color: #000;
-    }
 
 .btn-sign{
     padding: 7px 20px 7px 20px;
@@ -214,6 +212,31 @@ header{
     cursor: pointer;
 }
 
+.cantidad-container {
+    display: flex;
+    justify-content: space-between; /* Alinear los elementos a los extremos */
+    align-items: center;
+    margin: 10px auto;
+}
+
+.cantidad {
+    width: 15px ; /* Reducir el ancho del campo de entrada */
+    text-align: center;
+}
+
+.cantidad-btn {
+    border: none;
+    background: #FF8A41;
+    color: #ffeddc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cantidad-btn:hover {
+    background: #FFA566;
+}
 /* Carrito*/
 .carrito{
     border: 1px solid #666;
@@ -402,6 +425,7 @@ header{
 .btn-add{
     padding: 7px 20px 7px 20px;
     text-align: center;
+    margin-top: 10px;
     margin-right: 10px;
     background: #1a6ac5;
     border-radius: 5px;
@@ -447,3 +471,9 @@ header{
         background:#ffa735;
         color: #ece6e6;
     }
+
+.resumen {
+    margin: auto; 
+    max-width: 600px;
+    text-align: center; 
+}
