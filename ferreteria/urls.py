@@ -11,7 +11,7 @@ urlpatterns = [
     path('login', views.login_view, name='login'),
     
 
-    path("carrito", views.carrito, name="carrito"),
+    #path("carrito", views.carrito, name="carrito"),
     path("convertir", views.convertir_divisa, name="convertir"),
     path("reconvertir", views.reconvertir_divisa, name="reconvertir"),
 
@@ -41,7 +41,7 @@ urlpatterns = [
 
     # CARRITO
     path('agregar_al_carrito/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
-    path('ver_carrito/', views.ver_carrito, name='ver_carrito'),
+    path('ver_carrito', views.ver_carrito, name='ver_carrito'),
     
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 

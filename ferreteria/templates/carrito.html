@@ -22,33 +22,38 @@
             <div class="item-carrito">
                 <ul>
                     {% for item in items %}
+                    {% csrf_token %}
                         <li>
                             <h3>{{ item.producto.nombre_prod }}</h3>
                             <p>Cantidad: {{ item.cantidad }}</p>
                             <p>Precio unitario: ${{ item.producto.precio_prod }}</p>
                             <p>Subtotal: ${{ item.subtotal }}</p>
-                            <form method="post" action="{% url 'quitar_del_carrito' item.id %}">
-                                {% csrf_token %}
+                            <form method="post" action="">
                                 <button type="submit">Quitar</button>
                             </form>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
+        </div>
 
-            <!-- Resumen -->
-            <div class="resumen">
-                <h3> Resumen de compra </h3>
-                <div class="carrito-total">
+        <!-- Resumen -->
+        <div class="resumen">
+            <h3> Resumen de compra </h3>
+            <div class="carrito-total">
+                <form action="{% url 'webpay_plus_commit' %}" method="post">
+                    {% csrf_token %}
                     <div class="fila">
                         <strong> Total </strong>
+                        <input type="hidden" id="total" name="total" value="{{ total }}">
                         <span class="carrito-precio-total">
-                             CLP
+                            {{ total }}    CLP
                         </span>
                     </div>
-                    <button class="btn-pagar"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>
-                </div>
+                    <button class="btn-pagar" type="submit"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>
+                </form>
             </div>
+        </div>
     </section>
 
 </body>
