@@ -26,8 +26,8 @@
                         <li>
                             <h3>{{ item.producto.nombre_prod }}</h3>
                             <p>Cantidad: {{ item.cantidad }}</p>
-                            <p>Precio unitario: ${{ item.producto.precio_prod }}</p>
-                            <p>Subtotal: ${{ item.subtotal }}</p>
+                            <p>Precio unitario: {{ item.producto.precio_prod }} USD</p>
+                            <p>Subtotal: {{ item.subtotal }} USD</p>
                             <form method="post" action="">
                                 <button type="submit">Quitar</button>
                             </form>
