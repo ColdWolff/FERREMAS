@@ -46,7 +46,7 @@ class Carrito(models.Model):
 class CarritoItem(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
+    cantidad = models.PositiveIntegerField(default=1)
 
     def subtotal(self):
-        return self.producto.precio_prod * self.cantidad
+        return self.cantidad * self.producto.precio_prod

@@ -31,7 +31,7 @@
                     <span class="precio-item" name="precio_prod">{{ producto.precio_prod }} USD</span>
                     <div class="cantidad-container">
                         <button type="button" class="cantidad-btn disminuir">-</button>
-                        <input type="text" class="cantidad" name="cantidad" value="1" min="1">
+                        <input type="text" class="cantidad" id="cantidad" name="cantidad" value="1" min="1">
                         <button type="button" class="cantidad-btn incrementar">+</button>
                     </div>
                     <button type="submit" class="boton-item">Agregar al carrito</button>
@@ -42,7 +42,7 @@
         <!-- Carrito -->
         <div class="carrito">
             <div class="carrito-total">
-                <a class="btn-pagar" style="text-decoration: none;" href="/carrito"> Ir a resumen <i
+                <a class="btn-pagar" style="text-decoration: none;" > Ir a resumen <i
                         class="fa-solid fa-bag-shopping"></i></a>
             </div>
         </div>

@@ -19,22 +19,21 @@
         <!-- Elementos del Carrito -->
         <div class="carrito-total">
             <h3>Tu carrito</h3>
-            {% if carrito %}
-            {% for item in carrito.values %}
             <div class="item-carrito">
-                <div class="info-producto">
-                    <span class="nombre-producto">{{ item.nombre }}</span>
-                    <span class="precio-producto">{{ item.precio }} USD</span>
-                    <span class="cantidad">{{ item.cantidad }}</span>
-                    <span class="subtotal">{{ item.subtotal }} USD</span>
-                </div>
-                {% endfor %}
-                <div class="total">
-                    <span>Total: {{ total_precio }} USD</span>
-                </div>
-                {% else %}
-                <p>Tu carrito está vacío</p>
-                {% endif %}
+                <ul>
+                    {% for item in items %}
+                        <li>
+                            <h3>{{ item.producto.nombre_prod }}</h3>
+                            <p>Cantidad: {{ item.cantidad }}</p>
+                            <p>Precio unitario: ${{ item.producto.precio_prod }}</p>
+                            <p>Subtotal: ${{ item.subtotal }}</p>
+                            <form method="post" action="{% url 'quitar_del_carrito' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Quitar</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
             </div>
 
             <!-- Resumen -->
@@ -44,7 +43,7 @@
                     <div class="fila">
                         <strong> Total </strong>
                         <span class="carrito-precio-total">
-                            {{ total_carrito }} CLP
+                             CLP
                         </span>
                     </div>
                     <button class="btn-pagar"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>

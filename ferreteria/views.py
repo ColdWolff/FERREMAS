@@ -495,18 +495,26 @@ def login_view(request):
 @login_required
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
+    print("a")
     carrito, created = Carrito.objects.get_or_create(user=request.user)
+    print("b")
     carrito_item, created = CarritoItem.objects.get_or_create(carrito=carrito, producto=producto)
-    carrito_item.cantidad += 1
+    print("c")
+    carrito_item.cantidad = request.POST.get('cantidad')
+    print("d")
     carrito_item.save()
+    print("e")
     return redirect('ver_carrito')
 
 @login_required
 def ver_carrito(request):
     carrito, created = Carrito.objects.get_or_create(user=request.user)
+    print("a")
     items = CarritoItem.objects.filter(carrito=carrito)
+    print("b")
     total = sum(item.subtotal() for item in items)
-    return render(request, 'ver_carrito.html', {'items': items, 'total': total})
+    print("c")
+    return render(request, 'carrito.html', {'items': items, 'total': total})
 
 #PAGINAS
 def index(request):
@@ -525,4 +533,3 @@ def add_cat(request):
         request,
         "add_cat.html",
     )
-
