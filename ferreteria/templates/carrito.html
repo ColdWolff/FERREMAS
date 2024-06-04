@@ -22,14 +22,18 @@
             <div class="item-carrito">
                 <ul>
                     {% for item in items %}
-                    {% csrf_token %}
                         <li>
                             <h3>{{ item.producto.nombre_prod }}</h3>
                             <p>Cantidad: {{ item.cantidad }}</p>
                             <p>Precio unitario: {{ item.producto.precio_prod }} USD</p>
                             <p>Subtotal: {{ item.subtotal }} USD</p>
-                            <form method="post" action="">
+                            <form method="post" action="{% url 'quitar_del_carrito' item.id %}">
+                                {% csrf_token %}
                                 <button type="submit">Quitar</button>
+                            </form>
+                            <form method="post" action="{% url 'restar_del_carrito' item.id %}">
+                                {% csrf_token %}
+                                <button type="submit">Sacar 1</button>
                             </form>
                         </li>
                     {% endfor %}

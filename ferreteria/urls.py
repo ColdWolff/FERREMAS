@@ -42,6 +42,8 @@ urlpatterns = [
     # CARRITO
     path('agregar_al_carrito/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
     path('ver_carrito', views.ver_carrito, name='ver_carrito'),
+    path('quitar_del_carrito/<int:item_id>/', views.quitar_del_carrito, name='quitar_del_carrito'),
+    path('restar_del_carrito/<int:item_id>/', views.restar_del_carrito, name='restar_del_carrito'),
     
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 

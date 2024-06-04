@@ -548,6 +548,26 @@ def ver_carrito(request):
     total= convertir_carrito(total)
     return render(request, 'carrito.html', {'items': items, 'total': total})
 
+@login_required
+def quitar_del_carrito(request, item_id):
+    item = get_object_or_404(CarritoItem, id=item_id, carrito__user=request.user)
+    item.delete()
+    return redirect('ver_carrito')
+
+@login_required
+def restar_del_carrito(request, item_id):
+    item = get_object_or_404(CarritoItem, id=item_id, carrito__user=request.user)
+    print("a")
+    if item.cantidad > 1:
+        item.cantidad -= 1
+        print("b")
+        item.save()
+        print("c")
+    else:
+        item.delete()
+        print("d")
+    return redirect('ver_carrito')
+
 #PAGINAS
 def index(request):
     productos = Producto.objects.all()
