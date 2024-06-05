@@ -1,5 +1,6 @@
 {% extends 'hnf.html' %}
 {% load static %}
+{% load custom_filters %}
 {% block content %}
 
 <head>
@@ -22,20 +23,23 @@
             <div class="item-carrito">
                 <ul>
                     {% for item in items %}
-                        <li>
-                            <h3>{{ item.producto.nombre_prod }}</h3>
-                            <p>Cantidad: {{ item.cantidad }}</p>
-                            <p>Precio unitario: {{ item.producto.precio_prod }} USD</p>
-                            <p>Subtotal: {{ item.subtotal }} USD</p>
+                    <li>
+                        <h3>{{ item.producto.nombre_prod }}</h3>
+                        <p>Cantidad: {{ item.cantidad }}</p>
+                        <p>Precio unitario: {{ item.producto.precio_prod }} USD</p>
+                        <p>Subtotal: {{ item.subtotal }} USD</p>
+                        <div class="carrito-botones">
                             <form method="post" action="{% url 'quitar_del_carrito' item.id %}">
                                 {% csrf_token %}
-                                <button type="submit">Quitar</button>
+                                <button class="boton-item" type="submit">Quitar</button>
                             </form>
                             <form method="post" action="{% url 'restar_del_carrito' item.id %}">
                                 {% csrf_token %}
-                                <button type="submit">Sacar 1</button>
+                                <button class="boton-item" type="submit">Sacar 1</button>
                             </form>
-                        </li>
+                        </div>
+
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
@@ -51,7 +55,7 @@
                         <strong> Total </strong>
                         <input type="hidden" id="total" name="total" value="{{ total }}">
                         <span class="carrito-precio-total">
-                            {{ total }}    CLP
+                            <span>{{ total|currency_format }}</span>
                         </span>
                     </div>
                     <button class="btn-pagar" type="submit"> Pagar <i class="fa-solid fa-bag-shopping"></i></button>

@@ -270,5 +270,27 @@ header{
     scale: 1.05;
 }
 
+.carrito-total .item-carrito .carrito-botones{
+    display: inline-flex;
+}
 
+.carrito-total .item-carrito .carrito-botones .boton-item{
+    margin: 10px;
+    border: none;
+    background: #c54c00;
+    color: #ffeddc;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.carrito-total .item-carrito .carrito-botones .boton-item:hover{
+    margin: 10px;
+    border: none;
+    background: #FF8A41;
+    color: #ffeddc;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
