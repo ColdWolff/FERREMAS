@@ -21,30 +21,7 @@
             <div style="text-align: center;">
                 <form method="POST">
                     {% csrf_token %}
-                    <h2> Registrarse </h2>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="text" required name="rut" maxlength="12" placeholder="Rut">
-                    </div>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="text" required name="Nombre Completo" placeholder="Nombre Completo">
-                    </div>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="text" required name="Correo" value="" placeholder="Correo">
-                    </div>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="password" required name="password1" placeholder="Contraseña">
-                    </div>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="password" required name="password2" placeholder="Confirmar Contraseña">
-                    </div>
-                    <div class="inputbox">
-                        <select name="role" id="role" required>
-                            <option value="" disabled selected hidden>Cargo</option>
-                            <option value="Vendedor">Vendedor</option>
-                            <option value="Bodeguero">Bodeguero</option>
-                            <option value="Contador">Contador</option>
-                        </select>
-                    </div>
+                    {{ form.as_p }}
 
                     <button class="btn" type="submit"> Registrarse </button>
                     <br>

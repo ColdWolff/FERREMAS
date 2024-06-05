@@ -1,13 +1,16 @@
 from datetime import datetime, timedelta
 import json
 import random
-from .models import Producto, Categoria, Stock, Proveedor
+from .models import Producto, Categoria, Stock, Proveedor, Carrito, CarritoItem
 from urllib.request import urlopen
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.conf import settings
 from transbank.error.transbank_error import TransbankError
 from transbank.webpay.webpay_plus.transaction import Transaction
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required
+from .forms import RegistroForm, LoginForm
 
 money_type = [
     ["USD", "Dólar", "Dolares"],
@@ -387,7 +390,7 @@ def stockList(request):
 #TRANSBANK
 def webpay_plus_create(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        amount = request.POST.get('amount')
+        amount = request.POST.get('total')
         
         if amount is None:
             return HttpResponse("Monto no especificado", status=400)
@@ -460,38 +463,110 @@ def status(request: HttpRequest) -> HttpResponse:
     response = Transaction().status(token_ws)
     return render(request, 'webpay/plus/status.html', {'response': response, 'token': token_ws, 'req': request.POST})
 
-#CARRITO
-def agregar_al_carrito(request, producto_id):
-    producto = get_object_or_404(Producto, id_producto=producto_id)
-    carrito = request.session.get('carrito', {})
-    
-    print("Producto ID:", producto_id)
-    print("Producto Nombre:", producto.nombre_prod)
-    
-    if producto_id in carrito:
-        carrito[producto_id]['cantidad'] += 1
+#LOGIN
+def registro_view(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('/')
     else:
-        carrito[producto_id] = {
-            'nombre': producto.nombre_prod,
-            'precio': producto.precio_prod,
-            'cantidad': 1,
-        }
+        form = RegistroForm()
+    return render(request, 'signup.html', {'form': form})
 
-    print("Carrito después de agregar:", carrito)
-    
-    request.session['carrito'] = carrito
-    return redirect('carrito_detalle')
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/')
+            else:
+                form.add_error(None, 'Nombre de usuario o contraseña incorrectos')
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
 
-def carrito_detalle(request):
-    carrito = request.session.get('carrito', {})
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-    print("Carrito en detalle:", carrito)
-    
-    total_precio = sum(item['precio'] * item['cantidad'] for item in carrito.values())
-    for item in carrito.values():
-        item['subtotal'] = item['precio'] * item['cantidad']
-    
-    return render(request, 'carrito.html', {'carrito': carrito, 'total_precio': total_precio})
+#CARRITO
+@login_required
+def agregar_al_carrito(request, producto_id):
+    producto = get_object_or_404(Producto, pk=producto_id)
+    carrito, created = Carrito.objects.get_or_create(user=request.user)
+    carrito_item, created = CarritoItem.objects.get_or_create(carrito=carrito, producto=producto)
+    carrito_item.cantidad = request.POST.get('cantidad')
+    carrito_item.save()
+    return redirect('ver_carrito')
+
+def convertir_carrito(total):
+    value_str = total
+
+    if not value_str:
+        return render(
+            request,
+            "llama_conversor.html",
+            {"mensaje": "El campo no puede estar vacío.", "money_type": money_type},
+        )
+
+    try:
+        value = float(value_str)
+    except ValueError:
+        return render(
+            request,
+            "llama_conversor.html",
+            {
+                "mensaje": "Por favor, ingrese un número válido.",
+                "money_type": money_type,
+            },
+        )
+
+    if value < 0:
+        return render(
+            request,
+            "llama_conversor.html",
+            {
+                "mensaje": "El número no puede ser negativo.",
+                "money_type": money_type,
+            },
+        )
+
+    url_actual = f"https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx?user=ai.arenas@duocuc.cl&pass=K20844763-7&function=GetSeries&timeseries=F073.TCO.PRE.Z.D&firstdate={fecha_de_hoy()}&lastdate={fecha_de_hoy()}"
+    valor_actual = obtener_valor(url_actual)
+
+    clp = round(float(value) * float(valor_actual), 0)
+    clp = int(clp)
+    return clp
+
+@login_required
+def ver_carrito(request):
+    carrito, created = Carrito.objects.get_or_create(user=request.user)
+    items = CarritoItem.objects.filter(carrito=carrito)
+    total = sum(item.subtotal() for item in items)
+    total= convertir_carrito(total)
+    return render(request, 'carrito.html', {'items': items, 'total': total})
+
+@login_required
+def quitar_del_carrito(request, item_id):
+    item = get_object_or_404(CarritoItem, id=item_id, carrito__user=request.user)
+    item.delete()
+    return redirect('ver_carrito')
+
+@login_required
+def restar_del_carrito(request, item_id):
+    item = get_object_or_404(CarritoItem, id=item_id, carrito__user=request.user)
+    print("a")
+    if item.cantidad > 1:
+        item.cantidad -= 1
+        print("b")
+        item.save()
+        print("c")
+    else:
+        item.delete()
+        print("d")
+    return redirect('ver_carrito')
 
 #PAGINAS
 def index(request):
@@ -499,27 +574,8 @@ def index(request):
     context={'productos': productos}
     return render(request,"index.html",context)
 
-def login(request):
-    return render(
-        request,
-        "login.html",
-    )
-
-def signup(request):
-    return render(
-        request,
-        "signup.html",
-    )
-
-def carrito(request):
-    return render(
-        request,
-        "carrito.html",
-    )
-
 def add_cat(request):
     return render(
         request,
         "add_cat.html",
     )
-

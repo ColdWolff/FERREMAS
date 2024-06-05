@@ -23,7 +23,7 @@
 }
 
 .my_navbar {
-    background:url(../img/headerbck.png);
+    background:url("../img/headerbck.4b600d03c01d.png");
     background-size:cover;
     background-position: center;
 }
@@ -275,16 +275,6 @@ header{
 }
 
 .carrito-total .item-carrito .carrito-botones .boton-item{
-    margin: 10px;
-    border: none;
-    background: #c54c00;
-    color: #ffeddc;
-    padding: 5px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.carrito-total .item-carrito .carrito-botones .boton-item:hover{
     margin: 10px;
     border: none;
     background: #FF8A41;

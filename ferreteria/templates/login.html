@@ -21,13 +21,7 @@
             <div style="text-align: center;">
                 <form method="POST">
                     {% csrf_token %}
-                    <h2> Acceder </h2>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="text" required name="Correo" value="" placeholder="Correo">
-                    </div>
-                    <div class="inputbox">
-                        <input style="text-indent: 6px;" type="password" required name="password" placeholder="Contraseña">
-                    </div>
+                    {{ form.as_p }}
 
                     <button class="btn" type="submit"> Acceder </button>
                     <br>

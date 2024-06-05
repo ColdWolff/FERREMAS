@@ -7,11 +7,11 @@ urlpatterns = [
     # Inicio
     path("", views.index, name="index"),
     # Login & Sign-up
-    path("login", views.login, name="login"),
-    path("signup", views.signup, name="signup"),
+    path('signup', views.registro_view, name='signup'),
+    path('login', views.login_view, name='login'),
     
 
-    path("carrito", views.carrito, name="carrito"),
+    #path("carrito", views.carrito, name="carrito"),
     path("convertir", views.convertir_divisa, name="convertir"),
     path("reconvertir", views.reconvertir_divisa, name="reconvertir"),
 
@@ -40,8 +40,10 @@ urlpatterns = [
     path('webpay/plus/status/', views.status, name='status'),
 
     # CARRITO
-    path('agregar/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
-    path('carrito', views.carrito_detalle, name='carrito_detalle'),
+    path('agregar_al_carrito/<int:producto_id>/', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('ver_carrito', views.ver_carrito, name='ver_carrito'),
+    path('quitar_del_carrito/<int:item_id>/', views.quitar_del_carrito, name='quitar_del_carrito'),
+    path('restar_del_carrito/<int:item_id>/', views.restar_del_carrito, name='restar_del_carrito'),
     
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
 

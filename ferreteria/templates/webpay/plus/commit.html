@@ -1,5 +1,6 @@
 {% extends 'hnf.html' %}
 {% load static %}
+{% load custom_filters %}
 {% block content %}
 
 <head>
@@ -26,7 +27,7 @@
             
             <h1>Resultado de la transaccion</h1>
             <h5>Su pago fue: {{ status }}</h5>
-            <h6>Monto pagado: ${{ amount }}</h6>
+            <h6>Monto pagado: <span>{{ amount|currency_format }}</span></h6>
             <h6>Tarjeta Utilizada: **** **** **** {{ card }}</h6>
         </div>
     </section>
